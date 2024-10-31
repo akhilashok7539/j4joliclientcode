@@ -1,0 +1,23 @@
+.admin-download-wrapper {
+  padding: 6%;
+}
+.employer-download-wrapper {
+  background: var(--primary-bg-color);
+  padding: 6%;
+  border-radius: 10px;
+  box-shadow: var(box-shadow-2);
+}
+.job-seeker-download-wrapper {
+  margin-top: 3rem;
+  background: var(--primary-bg-color);
+  padding: 6%;
+  border-radius: 10px;
+  box-shadow: var(box-shadow-2);
+}
+.job-download-wrapper {
+  margin-top: 3rem;
+  background: var(--primary-bg-color);
+  padding: 6%;
+  border-radius: 10px;
+  box-shadow: var(box-shadow-2);
+}

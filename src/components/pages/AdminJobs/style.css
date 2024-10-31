@@ -1,0 +1,55 @@
+.admin-jobs {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    padding: 3%;
+    background-color: var(--secondary-bg-color);
+  }
+  
+  .admin-jobs .filters {
+    display: flex;
+    align-items: flex-start;
+    justify-content: stretch;
+    background: var(--primary-bg-color);
+    margin: 0 1.5rem;
+    border-radius: 10px;
+    padding-bottom: 1.5rem;
+    border: 1px solid rgba(255, 173, 255, 0.193);
+    box-shadow: 5px 5px 14px #f3f3f3, -5px -5px 14px #ffffff;
+  }
+  
+  .admin-jobs .filters .select-container {
+    width: 100%;
+    margin: 0 1.5rem;
+  }
+  
+  .admin-jobs .filters .job-count {
+    width: 20%;
+    margin-top: 2.9rem;
+    margin-right: 1rem;
+  }
+  
+  .admin-jobs .card-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  @media only screen and (max-width: 1200px) {
+    .admin-jobs .filters {
+      margin: 0 .7rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .admin-jobs .filters .job-count {
+      margin-top: 1rem;
+      width: 0%;
+    }
+  
+    .admin-jobs .card-container {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  

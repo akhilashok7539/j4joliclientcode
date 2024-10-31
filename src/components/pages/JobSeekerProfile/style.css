@@ -1,0 +1,199 @@
+.profile {
+  padding: 6%;
+}
+
+.profile h2 {
+  text-align: center;
+}
+
+.profile .valid-till {
+  padding: 2rem;
+  margin: 1rem 0 2.5rem 0;
+  background-color: var(--primary-bg-color);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+}
+
+.profile .valid-till .heading-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.profile .valid-till .heading-wrapper .icon {
+  font-size: 2rem;
+  margin-right: 0.5rem;
+}
+
+.profile .valid-till p {
+  margin-top: 0.6rem;
+}
+
+.profile .valid-till .celebrate-wrapper-profile {
+  height: auto;
+}
+
+.profile .valid-till .celebrate-wrapper-profile .celebrate-gif {
+  width: 20rem;
+  position: absolute;
+  top: 10%;
+}
+
+.profile .edit-profile {
+  background-color: var(--secondary-bg-color);
+}
+
+.profile .edit-profile h3 {
+  text-align: left;
+  font-size: 1.8rem;
+}
+
+.profile .edit-profile .policy-checkbox {
+  margin-right: auto;
+  display: flex;
+}
+
+.profile .edit-profile .policy-checkbox .chakra-form-control {
+  width: 2rem;
+}
+
+.profile .edit-profile .policy-checkbox .policy-checkbox-text {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.profile .edit-profile .policy-checkbox p {
+  margin: 0 0.3rem 0 0.2rem;
+}
+
+.profile .edit-profile .form {
+  .row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .row .column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .row .column:first-child {
+    margin-right: 1rem;
+  }
+
+  .row .column:last-child {
+    margin-left: 1rem;
+  }
+
+  .row .column .container {
+    width: 100%;
+    padding: 2rem;
+    margin: 1rem 0;
+    background-color: var(--primary-bg-color);
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    border-radius: 10px;
+  }
+
+  .row .column .container .heading-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .row .column .container .heading-container .icon {
+    font-size: 2rem;
+    margin-right: 0.5rem;
+  }
+}
+
+.profile .delete-account {
+  margin-top: 3rem;
+}
+
+.profile .delete-account .delete-wrapper {
+  background-color: var(--primary-bg-color);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+  padding: 2.3rem 2rem 2rem;
+}
+
+.profile .delete-account .delete-wrapper .delete-heading {
+  display: flex;
+  align-items: center;
+}
+
+.profile .delete-account .delete-wrapper .icon {
+  font-size: 1.8rem;
+  margin-right: 0.5rem;
+}
+
+.profile .delete-account .delete-wrapper .para {
+  margin-top: 0.5rem;
+}
+
+.in-valid {
+  box-shadow: 0px 0px 18px -5px #c63830;
+}
+
+@media screen and (max-width: 700px) {
+  .profile .valid-till .heading-wrapper h4 {
+    line-height: 1.6rem;
+    font-size: 1.2rem;
+  }
+
+  .profile .valid-till .heading-wrapper .icon {
+    font-size: 2rem;
+  }
+
+  .profile h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  .profile {
+    padding: 5rem 6%;
+  }
+
+  .profile .delete-account .delete-wrapper .delete-heading h4 {
+    line-height: 1.8rem;
+  }
+
+  .profile .edit-profile h3 {
+    margin-top: 0.3rem;
+  }
+
+  .profile .edit-profile .policy-checkbox .chakra-form-control {
+    width: 7%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .profile .edit-profile .form .row {
+    flex-direction: column;
+  }
+
+  .profile .edit-profile .form .row .column {
+    margin: 0;
+  }
+
+  .profile .edit-profile .form .row .column:first-child {
+    margin-right: 0;
+  }
+
+  .profile .edit-profile .form .row .column:last-child {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .profile .edit-profile .form .row .column .container {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+}

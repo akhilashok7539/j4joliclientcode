@@ -1,0 +1,62 @@
+.follow-up-container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 57px;
+}
+.addUserButtoncontainer{
+    display: grid;
+    grid-template-columns: 85% auto;
+    padding: 7px;
+    margin-bottom: 10px;
+    background: white;
+    align-items: end;
+    grid-gap: 15px;
+
+}
+.add-user-btn{
+    background: #8b00ff;
+    color: white;
+    height: 39px;
+    border-radius: 5px;
+}
+.user-warpper{
+    background: white;
+}
+
+.tab-header button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: lightgray;
+  }
+  
+  .tab-header .active {
+    background-color: #ffffff;
+    color: #917bff;
+    font-weight: bold;
+    border-bottom: 3px solid #917bff;
+  }
+  
+  .tab-content {
+    margin-top: 20px;
+  }
+  
+
+  .tab-header{
+    display: grid;
+    grid-template-columns: 50% auto;
+  }
+
+  .container{
+    margin-top: 57px;
+    margin-left: 65px;
+    margin-right: 65px;
+  }
+
+  .matchingJobsContainer{
+    display: grid;
+    grid-template-columns: 50% auto;
+  }

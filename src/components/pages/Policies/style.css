@@ -1,0 +1,60 @@
+.policy-wrapper {
+  padding: 6%;
+  text-align: justify;
+}
+
+.policy-wrapper .policy-list {
+  margin-top: 0.5rem;
+}
+
+.policy-wrapper .policy-heading {
+  margin: 2rem 0;
+  font-size: 2.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.policy-wrapper .policy-sub-heading {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.policy-wrapper .policy-list-item {
+  padding: 0.5rem 0;
+}
+
+.policy-wrapper .policy-section {
+  padding: 1rem 0;
+}
+
+.policy-wrapper .policy-para {
+  margin-top: 0.5rem;
+  line-height: 2rem;
+}
+
+.policy-wrapper .policy-para .policy-para-imp {
+  font-weight: 900;
+}
+
+.policy-wrapper .terms-para {
+  padding: 0.5rem 0;
+}
+
+.policy-wrapper .hr {
+  margin: 1.5rem 0;
+}
+
+@media screen and (max-width: 600px) {
+  .policy-wrapper {
+    margin-top: 2rem;
+  }
+
+  .policy-wrapper .policy-heading {
+    font-size: 1.8rem;
+  }
+
+  .policy-wrapper .policy-sub-heading {
+    font-size: 1.5rem;
+  }
+}

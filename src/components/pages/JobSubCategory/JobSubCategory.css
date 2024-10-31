@@ -1,0 +1,26 @@
+.add-job-category {
+    margin: 5%;
+    padding: 5%;
+    background: var(--primary-bg-color);
+    border-radius: 10px;
+}
+
+.add-job-category h3 {
+    padding-bottom: 2rem;
+}
+
+.add-job-category .tag-input-container {
+    margin: 2rem 0;
+}
+
+.add-job-category .tag-input-container .display-tag {
+    margin-bottom: 2rem;
+}
+
+.add-job-category .tag-input-container .display-tag .tag-list {
+    margin: .5rem 0;
+}
+
+.add-job-category .tag-input-container .display-tag .tag-list .tag {
+    margin: .5rem;
+}

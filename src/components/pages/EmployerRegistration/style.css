@@ -1,0 +1,119 @@
+.employer-registration {
+  padding: 6%;
+  background-color: var(--secondary-bg-color);
+}
+
+.employer-registration h2 {
+  text-align: center;
+}
+
+.employer-registration .policy-wrapper {
+  padding: 1.5rem 2rem;
+  background-color: var(--primary-bg-color);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+}
+
+.employer-registration .policy-checkbox {
+  margin-right: auto;
+  display: flex;
+}
+
+.employer-registration .policy-checkbox .chakra-form-control {
+  width: 2rem;
+}
+
+.employer-registration .policy-checkbox .policy-checkbox-text {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.employer-registration .policy-checkbox p {
+  margin: 0 0.3rem 0 0.2rem;
+}
+
+.employer-registration .form .row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.employer-registration .form .row .column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.employer-registration .form .row .column:first-child {
+  margin-right: 1rem;
+}
+
+.employer-registration .form .row .column:last-child {
+  margin-left: 1rem;
+}
+
+.employer-registration .form .row .column .container {
+  width: 100%;
+  padding: 2rem;
+  margin: 1rem 0;
+  background-color: var(--primary-bg-color);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+}
+
+.employer-registration .form .row .column .container .heading-container {
+  display: flex;
+  align-items: center;
+}
+
+.employer-registration .form .row .column .container .heading-container .icon {
+  font-size: 2rem;
+  margin-right: 0.5rem;
+}
+
+@media screen and (max-width: 800px) {
+  .employer-registration {
+    padding: 5rem 6%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .employer-registration .policy-checkbox .chakra-form-control {
+    width: 7%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .employer-registration .policy-checkbox {
+    width: 100%;
+  }
+
+  .employer-registration .form .row {
+    flex-direction: column;
+  }
+
+  .employer-registration .form .row .column {
+    margin: 0;
+  }
+
+  .employer-registration .form .row .column:first-child {
+    margin-right: 0;
+  }
+
+  .employer-registration .form .row .column:last-child {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .employer-registration .form .row .column .container {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+}

@@ -1,0 +1,21 @@
+.wrapper {
+  padding: 6%;
+  text-align: justify;
+}
+
+.wrapper .heading {
+  margin: 2rem 0;
+  font-size: 2.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper .para {
+  margin-top: 0.5rem;
+  line-height: 2rem;
+}
+
+.wrapper .para .para-imp {
+  font-weight: 900;
+}

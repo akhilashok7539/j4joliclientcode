@@ -1,0 +1,49 @@
+.send-sms {
+  padding: 6%;
+}
+
+.send-sms h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.send-sms .sms-button-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.send-sms .sms-button-wrapper .job-category-wrapper {
+  background-color: var(--primary-bg-color);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+  padding: 2.3rem 2rem 2rem;
+  margin: 1rem 0;
+  min-height: 5rem;
+  min-width: 15rem;
+}
+
+.send-sms .sms-button-wrapper .job-category-wrapper .job-category-details-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.send-sms .sms-button-wrapper .job-category-wrapper .job-category-details-wrapper .category-name {
+  font-size: 1.3rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 7px;
+}
+
+.send-sms .sms-button-wrapper .job-category-wrapper .job-category-details-wrapper .total-count {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.5rem;
+}

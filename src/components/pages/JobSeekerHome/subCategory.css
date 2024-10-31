@@ -1,0 +1,82 @@
+.job-category-div {
+  display: flex;
+  margin-top: 1rem;
+  border: 1px solid var(--box-shadow-2);
+}
+
+.job-category-div .category-name {
+  width: 10rem;
+}
+
+.sub-category {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sub-category .sub-category-item {
+  margin-left: 0.3rem;
+}
+
+.sub-category-wrapper {
+  margin: 0.5rem auto;
+  overflow-x: auto;
+  transform: rotateX(180deg);
+}
+
+.sub-category-wrapper .sub-category-table {
+  transform: rotateX(180deg);
+  margin-top: 0.5rem;
+}
+
+/* Custom Scrollbar Styles */
+#sub-category::-webkit-scrollbar {
+  width: 10px;
+  background: #fff;
+}
+
+#sub-category::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+#sub-category::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  background-image: -webkit-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
+  border-radius: 10px;
+}
+
+#sub-category::-moz-scrollbar {
+  width: 10px;
+  background: #fff;
+}
+
+#sub-category::-moz-scrollbar-track {
+  -webkit-box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+#sub-category::-moz-scrollbar-thumb {
+  background: var(--primary-color);
+  background-image: -webkit-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
+  border-radius: 10px;
+}

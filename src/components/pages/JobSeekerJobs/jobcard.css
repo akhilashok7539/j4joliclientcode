@@ -1,0 +1,155 @@
+.job-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: stretch;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: var(--neumorphism-box-shadow);
+  background-color: var(--primary-bg-color);
+  margin: 1.5rem;
+}
+
+.job-card .title {
+  font-size: 1.6rem;
+  margin-bottom: 0.25rem;
+  width: 90%;
+}
+
+.job-card .row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.job-card .district,
+.job-card .salary {
+  width: 50%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid rgba(190, 177, 255, 0.248);
+  background: white;
+  border-radius: 5px;
+  margin: 0.25rem 0;
+}
+
+.job-card .district {
+  margin-right: 0.25rem;
+}
+
+.job-card .salary {
+  margin-left: 0.25rem;
+}
+
+.job-card .district .label,
+.job-card .salary .label {
+  font-size: 0.8rem;
+  color: rgb(129, 111, 131);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.job-card .district .label .icon,
+.job-card .salary .label .icon {
+  margin-right: 0.15rem;
+}
+
+.job-card .created-date {
+  margin-bottom: 0.5rem;
+  margin-left: 0.1rem;
+  color: #4A5568;
+}
+
+.job-card .description,
+.job-card .location {
+  width: 100%;
+  height: 100%;
+  margin: 0.25rem 0;
+  border: 1px solid rgba(190, 177, 255, 0.248);
+  background: white;
+  border-radius: 5px;
+  padding: 0.4rem;
+  justify-self: stretch;
+}
+
+.job-card .description .label,
+.job-card .location .label {
+  margin-bottom: 0.4rem;
+  font-size: 0.8rem;
+  color: rgb(129, 111, 131);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.job-card .description .label .icon,
+.job-card .location .label .icon {
+  margin-right: 0.15rem;
+}
+
+.job-card .card-btn-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+.job-card .card-btn-container .more-btn {
+  background: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-right: 1.3rem;
+}
+
+.job-card .card-btn-container .delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1.5rem;
+  padding: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.job-card .card-btn-container .delete-btn .icon {
+  font-size: 1.7rem;
+  color: rgb(82, 82, 82);
+  transition: color 0.3s;
+}
+
+.job-card .card-btn-container .delete-btn .icon:hover {
+  color: var(--red);
+}
+
+.job-card .card-btn-container .edit-btn {
+  width: 2.2rem;
+  height: 2.2rem;
+  background: var(--primary-color-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.job-card .card-btn-container .edit-btn .icon {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+@media only screen and (max-width: 850px) {
+  .job-card {
+    width: auto;
+    margin: 1rem 0.7rem;
+  }
+}

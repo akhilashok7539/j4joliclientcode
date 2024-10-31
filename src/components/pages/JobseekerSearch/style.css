@@ -1,0 +1,154 @@
+.search {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  padding: 3%;
+  background-color: var(--secondary-bg-color);
+}
+
+.search .filters {
+  display: flex;
+  align-items: flex-start;
+  justify-content: stretch;
+  background: var(--primary-bg-color);
+  margin: 0 1.5rem;
+  border-radius: 10px;
+  padding-bottom: 1.5rem;
+  border: 1px solid rgba(255, 173, 255, 0.193);
+  box-shadow: 5px 5px 14px #f3f3f3, -5px -5px 14px #ffffff;
+}
+
+.search .filters .search-component {
+  width: 100%;
+  margin: 0 1.5rem;
+  padding: 5px;
+}
+
+.search .filters .district,
+.search .filters .label {
+  font-size: 0.8rem;
+  color: rgb(129, 111, 131);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.search .filters .card-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.search .jobseeker-details {
+  margin: 3%;
+  padding: 2%;
+  border-radius: 5px;
+}
+
+.search .jobseeker-details .row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.search .jobseeker-details .row .column {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.search .jobseeker-details .row .column:first-child {
+  margin-right: 1rem;
+}
+
+.search .jobseeker-details .row .column:last-child {
+  margin-left: 1rem;
+}
+
+.search .jobseeker-details .row .column .title .label {
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.search .jobseeker-details .row .column .title h5 {
+  font-size: 2rem;
+}
+
+.search .jobseeker-details .row .column .container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 25rem;
+  background: var(--primary-bg-color);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 1rem 0;
+}
+
+.search .jobseeker-details .row .column .container .heading-container {
+  display: flex;
+  align-items: center;
+}
+
+.search .jobseeker-details .row .column .container .heading-container .icon {
+  font-size: 2rem;
+  margin-right: 0.5rem;
+}
+
+.search .jobseeker-details .row .column .container .sub-container {
+  border: 1px solid rgba(0, 0, 0, 0.097);
+  border-radius: 5px;
+  margin: 0.5rem 0;
+  padding: 0.4rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  color: var(--primary-font-color);
+}
+
+.search .jobseeker-details .row .column .container .sub-container .label {
+  font-size: 0.7rem;
+  color: var(--secondary-font-color);
+}
+
+.search .jobseeker-details .button-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.search .jobseeker-details .button-container button {
+  margin-right: 2rem;
+}
+
+@media only screen and (max-width: 1100px) {
+  .search .filters {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .search .filters .search-component {
+    display: flex;
+    justify-content: center;
+  }
+
+  .search .jobseeker-details .row {
+    flex-direction: column;
+  }
+
+  .search .jobseeker-details .row .column {
+    width: 100%;
+  }
+
+  .search .jobseeker-details .row .column:first-child {
+    margin-right: 0rem;
+  }
+
+  .search .jobseeker-details .row .column:last-child {
+    margin-left: 0rem;
+  }
+
+  .search .jobseeker-details .row .column .container {
+    min-width: auto;
+  }
+}

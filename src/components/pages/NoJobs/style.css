@@ -1,0 +1,18 @@
+.no-job {
+  background: var(--primary-bg-color);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 6%;
+}
+
+.no-job-image {
+  margin-bottom: 5%;
+  width: 40%;
+}
+
+@media screen and (max-width: 800px) {
+  .no-job {
+      margin-top: 6rem;
+  }
+}

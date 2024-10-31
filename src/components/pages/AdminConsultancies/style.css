@@ -1,0 +1,116 @@
+.page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  padding: 3%;
+  background-color: var(--secondary-bg-color);
+}
+
+.page .filters {
+  display: flex;
+  align-items: flex-start;
+  justify-content: stretch;
+  background: var(--primary-bg-color);
+  margin: 0 1.5rem;
+  border-radius: 10px;
+  padding-bottom: 1.5rem;
+  border: 1px solid rgba(255, 173, 255, 0.193);
+  box-shadow: 5px 5px 14px #f3f3f3, -5px -5px 14px #ffffff;
+}
+
+.page .filters .search-component {
+  width: 100%;
+  margin: 0 1.5rem;
+  padding: 5px;
+}
+
+.page .details {
+  display: flex;
+  align-items: flex-start;
+  justify-content: stretch;
+  background: var(--primary-bg-color);
+  margin: 1.5rem 1.5rem;
+  border-radius: 10px;
+  padding: 2%;
+  border: 1px solid rgba(255, 173, 255, 0.193);
+  box-shadow: 5px 5px 14px #f3f3f3, -5px -5px 14px #ffffff;
+}
+
+.page .details .row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.page .details .row .column {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.page .details .row .column:first-child {
+  margin-right: 1rem;
+}
+
+.page .details .row .column:last-child {
+  margin-left: 1rem;
+}
+
+.page .details .row .column .title .label {
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.page .details .row .column .title h5 {
+  font-size: 2rem;
+}
+
+.page .details .row .column .container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 25rem;
+  background: var(--primary-bg-color);
+  border-radius: 10px;
+  margin: 1rem 0;
+}
+
+.page .details .row .column .container .sub-container {
+  border: 1px solid rgba(0, 0, 0, 0.097);
+  border-radius: 5px;
+  margin: 0.5rem 0;
+  padding: 0.4rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  color: var(--primary-font-color);
+}
+
+.page .details .row .column .container .sub-container .label {
+  font-size: 0.7rem;
+  color: var(--secondary-font-color);
+}
+
+.page .details .row .column .container .sub-container .icon {
+  display: unset;
+}
+
+.page .consultancy {
+  background: var(--primary-bg-color);
+  margin: 1.5rem 1.5rem;
+  border-radius: 10px;
+  padding: 2%;
+  border: 1px solid rgba(255, 173, 255, 0.193);
+  box-shadow: 5px 5px 14px #f3f3f3, -5px -5px 14px #ffffff;
+}
+
+.page .consultancy .job-categories {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.page .consultancy .job-categories .job-category-checkbox {
+  width: 25%;
+}

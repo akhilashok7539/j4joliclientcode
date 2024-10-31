@@ -1,0 +1,13 @@
+.icon {
+  margin-right: 5px;
+}
+
+.copy-job-btns {
+  margin-left: 1rem;
+}
+
+@media only screen and (max-width: 850px) {
+  .copy-job-btns {
+    margin-left: 0rem;
+  }
+}

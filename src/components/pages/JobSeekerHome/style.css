@@ -1,0 +1,144 @@
+.job-seeker-home {
+  padding: 1rem 6%;
+  width: 100%;
+}
+
+.job-seeker-home .welcome-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.5rem;
+}
+
+.job-seeker-home .welcome-section .img-container {
+  margin: 2rem;
+  width: 100%;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+}
+
+.job-seeker-home .welcome-section .img-container .hero-img {
+  width: 25rem;
+}
+
+.job-seeker-home .welcome-section .sub-category-list {
+  margin-bottom: 1.5rem;
+  padding: 3%;
+}
+
+.job-seeker-home .welcome-section .content {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0rem;
+}
+
+.job-seeker-home .welcome-section .content h3 {
+  margin-bottom: 0.7rem;
+}
+
+.job-seeker-home .welcome-section .content p {
+  margin-bottom: 1rem;
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 0 5%;
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container {
+  position: relative;
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .job-category-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  background-position: center;
+  border-radius: 7px;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  outline: none;
+  padding: 0.8rem 2.5rem;
+  transition: background 0.8s;
+  margin: 1.2rem 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  min-width: 15rem;
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .job-category-btn:hover,
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .job-category-btn:focus {
+  background: darken(#6c4fff, 6%) radial-gradient(circle, transparent 1%, darken(#6c4fff, 5%) 1%) center/15000%;
+  color: var(--white);
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .job-category-btn:active {
+  background-color: darken(#6c4fff, 10%);
+  background-size: 100%;
+  transition: background 0s;
+  color: var(--white);
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .free-job-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f69f43;
+  background-position: center;
+  border-radius: 7px;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  outline: none;
+  padding: 0.8rem 2.5rem;
+  transition: background 0.8s;
+  margin: 1.2rem 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  min-width: 15rem;
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .free-job-btn:hover,
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .free-job-btn:focus {
+  background: darken(#f69f43, 6%) radial-gradient(circle, transparent 1%, darken(#f69f43, 5%) 1%) center/15000%;
+  color: var(--white);
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .free-job-btn:active {
+  background-color: darken(#f69f43, 10%);
+  background-size: 100%;
+  transition: background 0s;
+  color: var(--white);
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .sub-category-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.4rem;
+  margin-left: 0.7rem;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 1px solid var(--primary-color);
+  display: none;
+}
+
+.job-seeker-home .welcome-section .job-category-wrapper .job-category-container .sub-category-link .icon {
+  font-size: 0.7rem;
+}
+
+.job-seeker-home .welcome-section .note {
+  border-radius: 7px;
+}
+
+/* Media Queries */
+@media only screen and (max-width: 1000px) {
+  .job-seeker-home {
+    margin-top: 6%;
+  }
+}

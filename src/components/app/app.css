@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+/* Variables */
+:root {
+  --primary-bg-color: rgb(255, 255, 255);
+  --secondary-bg-color: #f6f4fd;
+  --primary-color: #6c4fff;
+  --secondary-color: #fdb532;
+  --primary-color-light: rgba(108, 79, 255, 0.248);
+  --primary-font-color: #3a2e49;
+  --secondary-font-color: #5f5666;
+  --white: rgb(255, 255, 255);
+  --grey: rgb(39, 39, 39);
+  --red: #c63830;
+  --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --box-shadow-2: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+  --neumorphism-box-shadow: 8px 8px 16px #e3e1e9, -8px -8px 16px #fbf9ff;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 95%;
+  width: 100%;
+}
+
+.static-app .static-sections {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.section {
+  padding: 6vw;
+}
+
+/* set the sections to scroll in dashboard */
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.dashboard .dashboard-sections {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--secondary-bg-color);
+  overflow-y: auto;
+}
+
+.dashboard .dashboard-sections .about-section {
+  min-height: 100vh;
+  background-color: var(--white);
+}
+
+.dashboard .dashboard-sections .contact-section {
+  min-height: 100vh;
+  background-color: var(--white);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 600;
+  color: var(--primary-font-color);
+}
+
+h1 {
+  font-size: 3.6rem;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+}
+
+h3 {
+  font-size: 2.1rem;
+  font-weight: 800;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 1.2rem;
+}
+
+p {
+  font-size: 1rem;
+  color: var(--secondary-font-color);
+}
+
+label {
+  color: var(--secondary-font-color);
+  margin-bottom: 0.3rem;
+}
+
+/* Common link styles */
+a,
+.link {
+  text-decoration: none;
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+a:hover,
+.link:hover {
+  color: var(--secondary-color);
+  transition: color 200ms ease;
+}
+
+a:focus,
+.link:focus {
+  outline: none;
+  color: var(--secondary-color);
+}
+
+/* Common button styles */
+
+/* setting a bottom space for bottom nav in mobile view */
+@media only screen and (max-width: 700px) {
+  html,
+  body {
+    font-size: 90%;
+  }
+
+  .dashboard .dashboard-sections {
+    padding-top: 3.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .dashboard .dashboard-sections .contact-section {
+    min-height: 80vh;
+  }
+
+  .dashboard .dashboard-sections .contact-section .contact-img {
+    max-width: 20rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  html,
+  body {
+    font-size: 3.5vw;
+  }
+}

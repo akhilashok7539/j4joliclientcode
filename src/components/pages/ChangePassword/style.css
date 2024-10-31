@@ -1,0 +1,45 @@
+.update-password {
+    width: 100%;
+    min-height: 87vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--secondary-bg-color);
+  }
+  
+  .update-password .container {
+    min-width: 600px;
+    padding: 3rem 5rem;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow-2);
+    background: var(--primary-bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .update-password .container .heading {
+    margin-bottom: 2rem;
+  }
+  
+  .update-password .container .button {
+    margin-top: 2rem;
+  }
+  
+  @media only screen and (max-width: 800px) {
+    .update-password {
+      height: 100%;
+      min-height: calc(100vh - 7.5rem);
+      background-color: var(--primary-bg-color);
+    }
+  
+    .update-password .container {
+      min-width: auto;
+      width: auto;
+      box-shadow: none;
+      padding: 3rem 10%;
+      width: 100%;
+    }
+  }
+  
