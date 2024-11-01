@@ -32,11 +32,11 @@ const ViewJobSubCategory = () => {
         });
     }
     const handleEdit = (props) =>{
-        sessionStorage.setItem("teleCaller", JSON.stringify(props));
-        history.push(`/admin/dashboard/edit-telecallers`);
+        sessionStorage.setItem("jobSubCategory", JSON.stringify(props));
+        history.push(`/admin/dashboard/update-job-sub-category`);
     }
     const handleDelete = (props) =>{
-        const ENDPOINT = '/telecaller/'+props._id
+        const ENDPOINT = '/job-sub-category/'+props._id
         api.delete(ENDPOINT).then((res) => {
             getJobSubCategory()
             toast({

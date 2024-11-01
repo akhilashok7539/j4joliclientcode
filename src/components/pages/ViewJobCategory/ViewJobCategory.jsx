@@ -36,40 +36,53 @@ const ViewJobCategory = () => {
     useEffect(() => {
         let isMounted = true;
 
-        const updateJobCategoryArray = async () => {
-            try {
-                const result = await api.get('/job-category?include_hidden=false&sub_category=true');
-
-                let jobCategoryArray = [];
-
-                for (let i = 0; i < result.data.job_categories.length; i++) {
-                    jobCategoryArray.push(result.data.job_categories[i]);
-                }
-
-                if (isMounted) {
-
-                    setJobCategories([...jobCategoryArray])
-                    setFilteredData([...jobCategoryArray])
-                };
-                // if(jobCategories>0) console.log(jobCategories)
-            } catch (err) {
-                if (isMounted) showErrorToast(toast, err);
-            }
-        };
-        updateJobCategoryArray();
+        getJobCategory(isMounted);
 
         return () => {
             isMounted = false;
         };
     }, []);
     const handleEdit = (item) =>{
-
         sessionStorage.setItem("JobCategory", JSON.stringify(item));
         history.push(`/admin/dashboard/update-job-category`)
-
     }
-    const handleDelete = (item) =>{
+    const getJobCategory = async (isMounted) =>{
+        try {
+            const result = await api.get('/job-category?include_hidden=false&sub_category=true');
 
+            let jobCategoryArray = [];
+
+            for (let i = 0; i < result.data.job_categories.length; i++) {
+                jobCategoryArray.push(result.data.job_categories[i]);
+            }
+
+            if (isMounted) {
+
+                setJobCategories([...jobCategoryArray])
+                setFilteredData([...jobCategoryArray])
+            };
+            // if(jobCategories>0) console.log(jobCategories)
+        } catch (err) {
+            if (isMounted) showErrorToast(toast, err);
+        }
+    }
+    
+    const handleDelete = (item) =>{
+      console.log(item)
+            const ENDPOINT = '/job-category/'+item.id
+            api.delete(ENDPOINT).then((res) => {
+                
+                toast({
+                    title: 'Deleted Successfully',
+                    description: 'District has been deleted successfully',
+                    status: 'success',
+                    duration: 2000,
+                    isClosable: true,
+                });
+            }).catch((err) => {
+                showErrorToast(toast, err);
+            });
+       
     }
     
     return (

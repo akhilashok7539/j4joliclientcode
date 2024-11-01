@@ -26,7 +26,7 @@ const District = React.lazy(() => import('../District'))
 const AddorUpdateDistrict = React.lazy(() => import('../District/AddorUpdateDistrict'))
 const ViewJobSubCategory = React.lazy(() => import('../JobSubCategory/ViewJobSubCategory'))
 const AddJobSubCategory = React.lazy(() => import('../JobSubCategory/JobSubCategory'))
-const UpdateJobSubCategory = React.lazy(() => import('../ViewJobCategory/UpdateJobCategory'))
+const UpdateJobCategory = React.lazy(() => import('../ViewJobCategory/UpdateJobCategory'))
 
 
 const ViewPrefferedLocations = React.lazy(() => import('../PreferedLocation/PreferedLocation'))
@@ -63,7 +63,6 @@ const AdminDashboard = () => {
           <AddTelecallers />
         </ProtectedRoute>
         <ProtectedRoute path="/admin/dashboard/edit-telecallers" redirect="/admin" userType="admin">
-
           <AddTelecallers isEdit="true" />
         </ProtectedRoute>
         <ProtectedRoute path="/admin/dashboard/add-user" redirect="/admin" userType="admin">
@@ -94,6 +93,7 @@ const AdminDashboard = () => {
 
           <ViewJobSubCategory />
         </ProtectedRoute>
+        
 
         <ProtectedRoute
           exact
@@ -160,6 +160,11 @@ const AdminDashboard = () => {
           <AddJobSubCategory />
         </ProtectedRoute>
 
+        <ProtectedRoute exact path="/admin/dashboard/update-job-sub-category" redirect="/admin" userType="admin">
+          {/* <SuperAdminLogin /> */}
+          <AddJobSubCategory isEdit="true"/>
+        </ProtectedRoute>
+
         <ProtectedRoute exact path="/admin/dashboard/locations" redirect="/admin" userType="admin">
           {/* <SuperAdminLogin /> */}
           <ViewPrefferedLocations />
@@ -186,7 +191,7 @@ const AdminDashboard = () => {
           userType="admin"
         >
           {/* <SuperAdminLogin /> */}
-          <UpdateJobSubCategory />
+          <UpdateJobCategory />
         </ProtectedRoute>
 
         <ProtectedRoute exact path="/admin/dashboard/sms" redirect="/admin" userType="admin">
