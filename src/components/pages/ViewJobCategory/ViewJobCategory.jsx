@@ -76,7 +76,7 @@ const ViewJobCategory = () => {
         <>
             <div className="follow-up-container">
                 <div className='addUserButtoncontainer'>
-                    <TextInput
+                    {/* <TextInput
                         type="text"
                         value={searchQuery}
                         onChange={handleSearchChange}
@@ -84,7 +84,8 @@ const ViewJobCategory = () => {
                         name="search_user"
                         className="text-input"
                         style={{ marginTop: '4px' }} // Since you were using `mt={4}` in Chakra UI
-                    />
+                    /> */}
+                      <div> </div>
                     <button className="add-user-btn" onClick={addJobCategory}>
                         Add Categories
                     </button>

@@ -32,12 +32,12 @@ const TeleCallers = () => {
             showErrorToast(toast, err);
         });
     }
-    const handleEdit = (props) =>{
+    const handleEdit = (props) => {
         sessionStorage.setItem("teleCaller", JSON.stringify(props));
         history.push(`/admin/dashboard/edit-telecallers`);
     }
-    const handleDelete = (props) =>{
-        const ENDPOINT = '/telecaller/'+props._id
+    const handleDelete = (props) => {
+        const ENDPOINT = '/telecaller/' + props._id
         api.delete(ENDPOINT).then((res) => {
             getTeleCallers()
             toast({
@@ -51,18 +51,13 @@ const TeleCallers = () => {
             showErrorToast(toast, err);
         });
     }
-    
+
     return (
 
 
         <div className="follow-up-container">
             <div className='addUserButtoncontainer'>
-                <TextInput
-                    LabelName="search Tele Caller"
-                    placeholder="Search with Name"
-                    name="serach_tele_Caller"
-                    mt={4}
-                ></TextInput>
+                <div> </div>
                 <button className="add-user-btn" onClick={AddTelecallers}>
                     Add Tele Callers
                 </button>

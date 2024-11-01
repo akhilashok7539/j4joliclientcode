@@ -56,12 +56,7 @@ const ViewJobSubCategory = () => {
 
         <div className="follow-up-container">
             <div className='addUserButtoncontainersub'>
-                <TextInput
-                    LabelName="search Job Sub-category"
-                    placeholder="Search with Job Sub Category"
-                    name="serach_Job_Sub-category"
-                    mt={4}
-                ></TextInput>
+            <div> </div>
                 <button className="add-user-btn" onClick={AddTelecallers}>
                     Add Job Sub-Category
                 </button>

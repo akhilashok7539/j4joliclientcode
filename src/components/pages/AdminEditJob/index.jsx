@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import './style.css';
 import useForm from '../../../hooks/useForm';
@@ -24,13 +24,16 @@ import {
   FcCustomerSupport,
 } from 'react-icons/fc';
 import {
-  
+
   IoLocationSharp,
-  
+
 } from 'react-icons/io5';
 import DeleteJob from '../../utilities/DeleteJob';
 import { useDisclosure } from '@chakra-ui/react';
 import { getDistricts } from '../../../districts';
+
+import Autocomplete from 'react-google-autocomplete';
+
 const AdminEditJob = (approved) => {
   const { id } = useParams();
   // states used by useForm hook
@@ -41,6 +44,7 @@ const AdminEditJob = (approved) => {
     location: '',
     description: '',
     job_category: '',
+    jobSubCategory: '',
     working_time: '',
     experience_required: '',
     companyName: '',
@@ -81,6 +85,23 @@ const AdminEditJob = (approved) => {
   // To set loading button active
   const [buttonLoading, setButtonLoading] = useState(false);
 
+  // To set job caegories
+  const [categories, setcategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [subCategories, setSubCategories] = useState([]);
+
+  // To set location
+  const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
+  const [place, setPlace] = useState(null);
+  const autocompleteRef = useRef(null);
+  const [error, setError] = useState(false);
+
+  // To set distict
+  const [districtsFull, setdistrictsFull] = useState([]);
+  const [dataListDistrict, setDataListDistrict] = useState([]);
+
+  const [callers, setTelecaller] = useState('')
+
   // state to set error message
   const [errorMsg, setErrorMsg] = useState({
     title: '',
@@ -89,6 +110,7 @@ const AdminEditJob = (approved) => {
     location: '',
     description: '',
     job_category: '',
+    jobSubCategory: '',
     working_time: '',
     preferred_gender: '',
     experience_required: '',
@@ -117,6 +139,8 @@ const AdminEditJob = (approved) => {
   const districtList = getDistricts()
 
   const [jobExpired, setJobExpired] = useState(false);
+  const [currentJobDetails, setCurrentJobDetails] = useState('');
+
 
   // history to set router url
   const history = useHistory();
@@ -126,6 +150,12 @@ const AdminEditJob = (approved) => {
   /* eslint-disable */
   // api call to get job categories
   useEffect(() => {
+
+    getJobCategoriesAndSubCategories();
+    getSubCategories();
+    getDistrictsList();
+    getTeleCallers();
+
     api
       .get('/job-category')
       .then((res) => {
@@ -146,6 +176,7 @@ const AdminEditJob = (approved) => {
       .get(`/admin/job/${id}`)
       .then((res) => {
         const currentJobDetails = res.data.job;
+        setCurrentJobDetails(currentJobDetails)
         setValues({
           title: currentJobDetails.title,
           salary: currentJobDetails.salary,
@@ -185,6 +216,107 @@ const AdminEditJob = (approved) => {
         showErrorToast(toast, err);
       });
   }, [id]);
+  useEffect(() => {
+    console.log("RE-RENDER");
+    patchValue();
+  }, [subCategories, currentJobDetails, dataListDistrict]);
+
+  const patchValue = async () => {
+    console.log('patching values', currentJobDetails)
+    const lat = currentJobDetails?.location?.coordinates[0];
+    const lng = currentJobDetails?.location?.coordinates[1];
+
+    setCoordinates({ lat, lng });
+    setPlace(currentJobDetails.location?.name)
+    setValues((prevValues) => ({
+      ...prevValues,
+      jobSubCategory: currentJobDetails.jobSubCategory
+
+    }));
+  }
+  const getJobCategoriesAndSubCategories = () => {
+    api.get('/job-category?include_hidden=false&sub_category=true').then((res) => {
+      setcategories(res.data.job_categories)
+    }).catch((err) => {
+      showErrorToast(toast, err);
+    });
+  }
+  const getTeleCallers = () => {
+    api.get('/telecaller').then((res) => {
+      const TelecallersList = res.data.map(x => x.name)
+      setTelecaller(TelecallersList)
+    }).catch((err) => {
+      showErrorToast(toast, err);
+    });
+  }
+  const getDistrictsList = () => {
+    api.get('/district').then((res) => {
+      setdistrictsFull(res.data)
+      const list = []
+      res.data.forEach((item) => {
+        list.push(item.name)
+      })
+      // console.log(list)
+      setDataListDistrict(list)
+
+    }).catch((err) => {
+      showErrorToast(toast, err);
+    });
+  }
+  const getSubCategories = async () => {
+    api.get('/job-sub-category?include_hidden=true').then((res) => {
+      setSubCategories(res.data)
+      console.log(subCategories)
+    }).catch((err) => {
+      showErrorToast(toast, err);
+    });
+  };
+
+  const handleCategoryChange = (event) => {
+    const categoryId = event.target.value;
+    const category = categories.find(cat => cat.id === categoryId);
+    setSelectedCategory(categoryId);
+    setSubCategories(category ? category.subCategories : []);
+
+    setValues((prevValues) => ({
+      ...prevValues,
+      job_category: categoryId,
+      jobSubCategory: '' // Reset jobSubCategory when category changes
+    }));
+
+  };
+
+  const handleSubCategoryChange = (event) => {
+    const selectedSubCategory = event.target.value;
+
+    // Update jobSubCategory in the form state
+    setValues((prevValues) => ({
+      ...prevValues,
+      jobSubCategory: selectedSubCategory
+    }));
+  };
+  const handlePlaceSelected = (place) => {
+    setError(false);
+    const name = place.name || place.formatted_address;
+    const firstPart = name ? name.split(',')[0] : '';
+    setPlace(firstPart);
+
+    if (place.geometry) {
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+
+      setCoordinates({ lat, lng });
+      // console.log("coordinates",coordinates)
+    }
+    // setValues((prevValues) => ({
+    //   ...prevValues,
+    //   location: {
+    //     "type": "Point",
+    //     "name":firstPart,
+    //     "coordinates": [coordinates.lat, coordinates.lng],
+    //   }
+    // }));
+  };
 
   /* eslint-enable */
 
@@ -223,7 +355,6 @@ const AdminEditJob = (approved) => {
       values.title !== '' &&
       values.salary !== '' &&
       values.district !== '' &&
-      values.location !== '' &&
       values.description !== '' &&
       values.job_category !== '' &&
       values.working_time !== '' &&
@@ -241,7 +372,6 @@ const AdminEditJob = (approved) => {
       errorMsg.title === '' &&
       errorMsg.salary === '' &&
       errorMsg.district === '' &&
-      errorMsg.location === '' &&
       errorMsg.description === '' &&
       errorMsg.job_category === '' &&
       errorMsg.working_time === '' &&
@@ -261,6 +391,11 @@ const AdminEditJob = (approved) => {
       errorMsg.jobSource === '' &&
       errorMsg.preferredContactMedium === ''
     ) {
+      values.location = {
+        "type": "Point",
+        "coordinates": [coordinates.lat, coordinates.lng],
+        "name": place
+      }
       const job = {
         id: id,
         title: values.title,
@@ -269,6 +404,7 @@ const AdminEditJob = (approved) => {
         location: values.location,
         description: values.description,
         job_category: values.job_category,
+        jobSubCategory: values.jobSubCategory,
         working_time: values.working_time,
         preferred_gender: gender,
         experience_required: values.experience_required,
@@ -430,7 +566,7 @@ const AdminEditJob = (approved) => {
                   errorMsg={errorMsg.title}
                 />
 
-                <SelectInput
+                {/* <SelectInput
                   isRequired={true}
                   isInvalid={errorMsg.job_category !== ''}
                   errorMsg={errorMsg.job_category}
@@ -441,7 +577,55 @@ const AdminEditJob = (approved) => {
                   onChange={onChange}
                   LabelName="Job Category"
                   onBlur={validateData}
-                />
+                /> */}
+                <div className='containerDiv'>
+                  <label style={{ fontSize: '0.8rem' }}>Job Category</label>
+                  {categories.length > 0 ? (
+
+                    <select
+
+                      style={{
+                        width: '100%',
+                        border: '1px solid #0000001f',
+                        padding: '10px',
+                        borderRadius: '4px'
+                      }}
+                      id="job-category" value={values.job_category} onChange={handleCategoryChange}>
+                      <option value="">--Select a category--</option>
+                      {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </select>
+
+
+                  ) : (
+                    <select id="job-category" >
+                      <option value="">No data</option>
+                    </select>
+                  )}
+                </div>
+
+                <div className='containerDiv'>
+
+                  <label style={{ fontSize: '0.8rem' }}>Job Sub Category</label>
+                  <select style={{
+                    width: '100%',
+                    border: '1px solid #0000001f',
+                    padding: '10px',
+
+                    borderRadius: '4px'
+                  }} id="job-subcategory" value={values.jobSubCategory} onChange={handleSubCategoryChange} >
+                    <option value="">--Select a subcategory--</option>
+                    {subCategories.map(subCategory => (
+                      <option key={subCategory._id} value={subCategory._id}>
+                        {subCategory.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
 
                 <TextAreaInput
                   idName="description"
@@ -562,11 +746,12 @@ const AdminEditJob = (approved) => {
                   <IoLocationSharp className="icon" color="#1565C0" />
                   <h4>Location Details</h4>
                 </div>
+
                 <SelectInput
                   isRequired={true}
                   isInvalid={errorMsg.district !== ''}
                   errorMsg={errorMsg.district}
-                  dataList={districtList}
+                  dataList={dataListDistrict}
                   mt={4}
                   name="district"
                   value={values.district}
@@ -574,7 +759,7 @@ const AdminEditJob = (approved) => {
                   LabelName="District"
                   onBlur={validateData}
                 />
-                <TextInput
+                {/* <TextInput
                   idName="location"
                   isRequired={true}
                   isInvalid={errorMsg.location !== ''}
@@ -586,7 +771,20 @@ const AdminEditJob = (approved) => {
                   onBlur={validateData}
                   errorMsg={errorMsg.location}
                   mt={4}
+                /> */}
+                <Autocomplete
+                  apiKey={'AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU'}
+                  onPlaceSelected={handlePlaceSelected}
+                  placeholder='Search your location'
+                  style={{
+                    width: '100%',
+                    border: '1px solid #0000001f',
+                    padding: '11px',
+                    marginTop: '18px',
+                    borderRadius: '4px'
+                  }}
                 />
+                <p>Selected location {place ? place : ''}</p>
               </div>
             </div>
             <div className="column">
@@ -775,6 +973,7 @@ const AdminEditJob = (approved) => {
                   onBlur={validateData}
                   mt={4}
                 />
+                
                 <TextInput
                   idName="jobSource"
                   LabelName="Job Source"

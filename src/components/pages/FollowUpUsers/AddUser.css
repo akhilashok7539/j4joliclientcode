@@ -158,3 +158,19 @@
   gap: 10px;
   margin-top: 10px;
 }
+
+.paragraphLocation{
+  margin-top: 10px;
+}
+.Validation{
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  color: var(--chakra-colors-red-500);
+  margin-top: var(--chakra-space-2);
+  font-size: var(--chakra-fontSizes-sm);
+  line-height: var(--chakra-lineHeights-normal);
+}
+.isRequired{
+  color: var(--chakra-colors-red-500);
+}

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Table, Thead, Tbody, Tr, Th, Td, useToast } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, useToast, Button } from '@chakra-ui/react';
 import './style.css';
 // import AddUserModal from './UserModal';
 import { useHistory } from 'react-router';
@@ -40,17 +40,28 @@ const FollowUpUser = () => {
         sessionStorage.setItem('UserDetailsUpdate', JSON.stringify(data));
         history.push(`/admin/dashboard/update-user`)
     }
+    const deleteUser = (data)=>{
+        sessionStorage.setItem('UserDetailsUpdate', JSON.stringify(data));
+        const API_ENDPOINT = '/follow-up-user/'+ data._id
+        api.delete(API_ENDPOINT).then((res) => {
+            getUsers()
+            toast({
+                title: 'User deleted',
+                description: 'User deleted sucessfully',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            });
+        }).catch((err) => {
+            showErrorToast(toast, err);
+        });
+    }
     return (
 
 
         <div className="follow-up-container">
             <div className='addUserButtoncontainer'>
-                <TextInput
-                    LabelName="search user"
-                    placeholder="Search with Name"
-                    name="serach_user"
-                    mt={4}
-                ></TextInput>
+                <div> </div>
                 <button className="add-user-btn" onClick={addUser}>
                     Add Users
                 </button>
@@ -63,8 +74,6 @@ const FollowUpUser = () => {
                             <Th>Gender</Th>
                             <Th>Experience</Th>
                             <Th>Phone Number</Th>
-                            <Th>Preffered Locations</Th>
-
                             <Th>Matching Jobs Count</Th>
                             <Th></Th>
                         </Tr>
@@ -78,15 +87,13 @@ const FollowUpUser = () => {
                                     <Td>{data.name}</Td>
                                     <Td>{data.gender}</Td>
                                     <Td>{data.experience}</Td>
-
                                     <Td>{data.phoneNumber}</Td>
-
-                                    <Td>{data.preferredLocation[0].name},{data.preferredLocation[1].name}</Td>
-
                                     <Td>{data.matchingJobs.length}</Td>
-                                    <Td>
-                                        <button onClick={() => viewUsers(data)}>View Matching Jobs</button>
-                                        <button onClick={() => updateUser(data)}>Edit</button>
+                                    <Td className='action-button'>
+                                        <Button onClick={() => viewUsers(data)}>View Matching Jobs</Button>
+                                        <Button onClick={() => updateUser(data)}>Edit</Button>
+                                        <Button onClick={() => deleteUser(data)}>Delete</Button>
+
                                     </Td>
                                 </Tr>
                             ))

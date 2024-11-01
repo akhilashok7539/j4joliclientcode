@@ -27,7 +27,7 @@ import { CloseIcon } from '@chakra-ui/icons';
 
 const UpdateUser = () => {
 
-    
+
     const [values, onChange, setValues] = useForm({
         name: '',
         gender: '',
@@ -76,6 +76,10 @@ const UpdateUser = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
     const dropdownRef = useRef(null);
+    // for sub category
+    const [isOpenSubcat, setIsOpenSubcat] = useState(false);
+    const [selectedOptionsSubCat, setSelectedOptionsSubCat] = useState([]);
+    const dropdownRefSubCat = useRef(null);
 
     // autocompltelocation
     const [locations, setLocations] = useState([]);
@@ -88,6 +92,8 @@ const UpdateUser = () => {
     useEffect(() => {
         let isMounted = true;
         document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mousedown", handlerOutsideClick);
+
         const fetchData = async () => {
             try {
                 // Call all three functions here
@@ -98,7 +104,7 @@ const UpdateUser = () => {
                     getJobCategoriesAndSubCategories(),
                     getTeleCallers(),
                     getSubCategories()
-                  ]);
+                ]);
                 await patchValue();
             } catch (err) {
                 if (isMounted) showErrorToast(toast, err);
@@ -113,58 +119,96 @@ const UpdateUser = () => {
 
         // Call the fetchData function
         fetchData();
-    
+        console.log("subCategories updated:", subCategories);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handlerOutsideClick);
             isMounted = false; // Cleanup function to avoid state update if unmounted
         };
     }, []);
 
-    const patchValue = async () =>{
+    useEffect(() => {
+        console.log("subCategories updated:", subCategories);
+        patchValue()
+    }, [subCategories]);
+
+    const patchValue = async () => {
         const data = JSON.parse(sessionStorage.getItem("UserDetailsUpdate"))
-        setValues(data)
-       
+        // setValues(data)
+
 
         const categoryId = data.jobCategory._id;
-        console.log("categories",categories)
+        console.log("categories", categories)
         const category = categories.find(cat => cat.id === categoryId);
         console.log(category)
         setSelectedCategory(categoryId);
-        
+
         setValues((prevValues) => ({
             ...prevValues,
+            name:data.name,
+            phoneNumber:data.phoneNumber,
             experience_required: data.experience,
             job_category: data.jobCategory._id,
-            jobSubCategory: data.jobSubCategory._id,
+
         }));
-        console.log("prefferedlocationFullList",prefferedlocationFullList);
-        console.log("data.preferredLocation",data.preferredLocation);
-       
-        const filteredList = prefferedlocationFullList.filter(location => 
+        // console.log("prefferedlocationFullList", prefferedlocationFullList);
+        // console.log("data.preferredLocation", data.preferredLocation);
+
+        const filteredList = prefferedlocationFullList.filter(location =>
             !data.preferredLocation.some(selected => selected._id === location._id)
         );
-        const mapLocationNames = filteredList.map(x=>x.name)
-        setSelectedOptions(mapLocationNames)
-       
-        const selectedIds = new Set(data.preferredLocation.map(location => location.name));
-        console.log(selectedIds)
-        // Generate lists for matching and non-matching items
-        const matchingList = prefferedlocationFullList.filter(location => selectedIds.has(location.name));
-        const nonMatchingList = prefferedlocationFullList.filter(location => !selectedIds.has(location.name));
-        
-        console.log("Matching List:", matchingList);
-        console.log("Non-Matching List:", nonMatchingList);
-        
-        
+        const mapLocationNames = filteredList.map(x => x.name)
+        // setSelectedOptions(mapLocationNames)
+        setLocations(data.preferredLocation)
+        // const selectedIds = new Set(data.preferredLocation.map(location => location.name));
+        // console.log(selectedIds)
 
-        console.log("matchingList",matchingList);
-        console.log("nonMatchingList",nonMatchingList);
+
+        // Generate lists for matching and non-matching items
+        // const matchingList = prefferedlocationFullList.filter(location => selectedIds.has(location.name));
+        // const nonMatchingList = prefferedlocationFullList.filter(location => !selectedIds.has(location.name));
+        // console.log("Matching List:", matchingList);
+        // console.log("Non-Matching List:", nonMatchingList);
+        // console.log("subCategories",subCategories)
+
+        // const FilterSubCat = subCategories.filter(cat => data.jobSubCategory.includes(cat._id) )
+        const list2Ids = new Set(data.jobSubCategory.map(item => item._id));
+        const commonItems = subCategories.filter(item => list2Ids.has(item._id));
+        const filterItems = commonItems.map(x => x.name);
+
+        setSelectedOptionsSubCat(filterItems)
+        console.log("Common Items:", filterItems);
+
+        setValues((prevValues) => ({
+            ...prevValues,
+            district: data.preferredDistricts[0] ? data.preferredDistricts[0].name : '',
+            followedUpBy: data.followedUpBy._id
+        }));
+
+        if (data.gender === 'male') {
+            setGender((prevGender) => ({
+                ...prevGender,
+                male: true,
+                female: false,
+            }));
+        }
+
+        if (data.gender === 'female') {
+            setGender((prevGender) => ({
+                ...prevGender,
+                male: false,
+                female: true,
+            }));
+        }
+        // console.log("matchingList", matchingList);
+        // console.log("nonMatchingList", nonMatchingList);
 
     }
-    
+
     const getSubCategories = async () => {
         api.get('/job-sub-category?include_hidden=true').then((res) => {
             setSubCategories(res.data)
+            console.log(subCategories)
         }).catch((err) => {
             showErrorToast(toast, err);
         });
@@ -196,16 +240,16 @@ const UpdateUser = () => {
             })
             setPrefferedLocations(list)
 
-            console.log("prefferedlocationFullList",prefferedlocationFullList)
-            const data = JSON.parse(sessionStorage.getItem("UserDetailsUpdate"))
-            const selectedIds = new Set(data.preferredLocation.map(location => location.name));
-            console.log(selectedIds)
-            // Generate lists for matching and non-matching items
-            const matchingList = prefferedlocationFullList.filter(location => selectedIds.has(location.name));
-            const nonMatchingList = prefferedlocationFullList.filter(location => !selectedIds.has(location.name));
-            
-            console.log("Matching List:prefferedlocationFullList", matchingList);
-            console.log("Non-Matching List:prefferedlocationFullList", nonMatchingList);
+            // console.log("prefferedlocationFullList",prefferedlocationFullList)
+            // const data = JSON.parse(sessionStorage.getItem("UserDetailsUpdate"))
+            // const selectedIds = new Set(data.preferredLocation.map(location => location.name));
+            // console.log(selectedIds)
+            // // Generate lists for matching and non-matching items
+            // const matchingList = prefferedlocationFullList.filter(location => selectedIds.has(location.name));
+            // const nonMatchingList = prefferedlocationFullList.filter(location => !selectedIds.has(location.name));
+
+            // console.log("Matching List:prefferedlocationFullList", matchingList);
+            // console.log("Non-Matching List:prefferedlocationFullList", nonMatchingList);
         }).catch((err) => {
             showErrorToast(toast, err);
         });
@@ -235,7 +279,7 @@ const UpdateUser = () => {
 
         setSelectedCategory(categoryId);
         setSubCategories(category ? category.subCategories : []);
-
+        // setSelectedOptionsSubCat([])
         setValues((prevValues) => ({
             ...prevValues,
             job_category: categoryId,
@@ -274,6 +318,10 @@ const UpdateUser = () => {
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
+    const toggleDropdownSubCat = () => {
+        setIsOpenSubcat(!isOpenSubcat);
+    };
+
 
     const handleOptionClick = (option) => {
         if (selectedOptions.includes(option)) {
@@ -282,14 +330,29 @@ const UpdateUser = () => {
             setSelectedOptions([...selectedOptions, option]);
         }
     };
+    const handleOptionClickSubCat = (option) => {
+        if (selectedOptionsSubCat.includes(option)) {
+            setSelectedOptionsSubCat(selectedOptionsSubCat.filter((item) => item !== option));
+        } else {
+            setSelectedOptionsSubCat([...selectedOptionsSubCat, option]);
+        }
+    };
+
 
     const isSelected = (option) => selectedOptions.includes(option);
+    const isSelectedSubCat = (option) => selectedOptionsSubCat.includes(option);
+
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setIsOpen(false);
         }
     };
+    const handlerOutsideClick = (event) => {
+        if (dropdownRefSubCat.current && !dropdownRefSubCat.current.contains(event.target)) {
+            setIsOpenSubcat(false)
+        }
+    }
 
 
 
@@ -312,44 +375,16 @@ const UpdateUser = () => {
 
 
         ) {
-            console.log("selectedOptions", selectedOptions)
+            // console.log("selectedOptions", selectedOptions)
             const prefLoc = []
-          
+            const selectDist = []
+
             if (selectedOptions.length > 0) {
                 const filteredLocations = prefferedlocationFullList.filter(location => selectedOptions.includes(location.name));
                 const locationsWithoutId = filteredLocations.map(({ _id, ...rest }) => rest);
                 locationsWithoutId.forEach(location => prefLoc.push(location));
             }
 
-            // if(locations.length>0)
-            // {
-
-            //     console.log("finallist",prefLoc.concat(locations))
-            // }
-
-
-            // if (values.locationSelected !== '' && place !== '') {
-            //     console.log('check')
-            //     const filterList = prefferedlocationFullList.filter((res) => {
-            //         return res.name === values.locationSelected
-            //     })
-
-            //     let prefObj = {
-            //         "type": filterList[0].type,
-            //         "coordinates": filterList[0].coordinates,
-            //         "name": filterList[0].name
-            //     }
-            //     prefLoc.push(prefObj)
-
-            //     let prefObj2 = {
-            //         "type": "Point",
-            //         "coordinates": [coordinates.lat, coordinates.lng],
-            //         "name": place
-            //     }
-            //     prefLoc.push(prefObj2)
-
-            // }
-            const selectDist = []
             if (values.district !== '') {
                 const filterList = districtsFull.filter((res) => {
                     return res.name === values.district
@@ -360,7 +395,18 @@ const UpdateUser = () => {
             const trueValues = getTrueValues(gender);
             const currentDate = new Date(); // Current date and time
             const currentIsoString = currentDate.toISOString(); // Convert to ISO string
+            console.log(selectedOptionsSubCat)
+            console.log(subCategories)
+            // const list1 = subCategories
 
+            // const list2Ids = new Set(selectedOptionsSubCat.map(item => item._id));
+            // const commonItems = subCategories.filter(item => selectedOptionsSubCat.has(item.name));
+            // const filterItems = commonItems.map(x => x.name);
+            const commonItems = subCategories.filter(item => selectedOptionsSubCat.includes(item.name));
+            // console.log(commonItems.map(x=>x._id))
+            values.jobSubCategory = commonItems.map(x=>x._id)
+            // values.jobSubCategory = selectedOptionsSubCat.map(x=>x._id)
+       
             const job = {
                 name: values.name,
                 phoneNumber: values.phoneNumber,
@@ -382,25 +428,28 @@ const UpdateUser = () => {
             };
             console.log(job)
             // //   setButtonLoading(true);
-            api
-                .post('/follow-up-user', job)
-                .then((res) => {
-                    //   setButtonLoading(false);
-                    toast({
-                        title: 'Successfully Added',
-                        description: 'Follow Up user created',
-                        status: 'success',
-                        duration: 3000,
-                        isClosable: true,
+            const data = JSON.parse(sessionStorage.getItem("UserDetailsUpdate"))
+
+            const API_ENDPOINT = '/follow-up-user/' +data._id
+                api
+                    .patch(API_ENDPOINT, job)
+                    .then((res) => {
+                        //   setButtonLoading(false);
+                        toast({
+                            title: 'Successfully Added',
+                            description: 'Follow Up user updated',
+                            status: 'success',
+                            duration: 3000,
+                            isClosable: true,
+                        });
+                        if (!dataPersist) {
+                            history.push('/admin/dashboard/follow-up');
+                        }
+                    })
+                    .catch((err) => {
+                        //   setButtonLoading(false);
+                        showErrorToast(toast, err);
                     });
-                    if (!dataPersist) {
-                        history.push('/admin/dashboard/follow-up');
-                    }
-                })
-                .catch((err) => {
-                    //   setButtonLoading(false);
-                    showErrorToast(toast, err);
-                });
         }
         else {
             console.log("form invalud")
@@ -462,11 +511,11 @@ const UpdateUser = () => {
                 coordinates: [lng, lat],  // Note: usually [lng, lat]
                 name: firstPart
             };
-    
+
             // Use the functional form of setLocations to add the new object
             setLocations((prevLocations) => [...prevLocations, prefObj]);
         }
-        
+
         // setLocations((prevLocations) => [...prevLocations, firstPart]);
         setInputValue('');
     };
@@ -652,8 +701,9 @@ const UpdateUser = () => {
                                     onChange={(e) => setInputValue(e.target.value)}
                                 />
 
-
+                                <p className='paragraphLocation'>Selected location lists</p>
                                 <div className='locationContainer' >
+
                                     {locations.map((location, index) => (
                                         <div key={index} className='locationChips'>
                                             <span>{location.name}</span>
@@ -724,7 +774,10 @@ const UpdateUser = () => {
                                                 padding: '10px',
                                                 borderRadius: '4px'
                                             }}
-                                            id="job-category" onChange={handleCategoryChange}>
+                                            id="job-category" onChange={handleCategoryChange}
+
+                                            value={values.job_category}
+                                        >
                                             <option disabled value="">Select a category</option>
                                             {categories.map(category => (
                                                 <option key={category.id} value={category.id}>
@@ -743,21 +796,52 @@ const UpdateUser = () => {
 
                                 <div className='containerDiv'>
 
-                                    <label style={{ fontSize: '0.8rem' }}>Job Sub Category</label>
+                                    {/* <label style={{ fontSize: '0.8rem' }}>Job Sub Category</label>
                                     <select style={{
                                         width: '100%',
                                         border: '1px solid #0000001f',
                                         padding: '10px',
 
                                         borderRadius: '4px'
-                                    }} id="job-subcategory" onChange={handleSubCategoryChange}>
+                                    }} id="job-subcategory" onChange={handleSubCategoryChange} disabled={!selectedCategory}>
                                         <option disabled value="">Select a subcategory</option>
                                         {subCategories.map(subCategory => (
                                             <option key={subCategory._id} value={subCategory._id}>
                                                 {subCategory.name}
                                             </option>
                                         ))}
-                                    </select>
+                                    </select> */}
+
+                                    <label style={{ fontSize: '0.8rem' }}>Job Sub Category</label>
+                                    <div className="dropdown-container" ref={dropdownRefSubCat}>
+
+                                        <div className="dropdown-header" onClick={toggleDropdownSubCat}>
+                                            {selectedOptionsSubCat.length > 0
+                                                ? selectedOptionsSubCat.join(", ")
+                                                : "Select job sub categories"}
+                                            <span className="dropdown-arrow">{isOpenSubcat ? "▲" : "▼"}</span>
+                                        </div>
+
+                                        {isOpenSubcat && (
+                                            <div className="dropdown-list">
+                                                {subCategories.map((option) => (
+                                                    <div
+                                                        key={option._id}
+                                                        onClick={() => handleOptionClickSubCat(option.name)}
+                                                        className={`dropdown-item ${isSelectedSubCat(option.name) ? "selected" : ""
+                                                            }`}
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={isSelectedSubCat(option.name)}
+                                                            readOnly
+                                                        />
+                                                        <span>{option.name}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
 
                             </div>
@@ -777,7 +861,10 @@ const UpdateUser = () => {
                                         padding: '10px',
 
                                         borderRadius: '4px'
-                                    }} id="job-subcategory" onChange={handleTelecallerChange} >
+                                    }} id="job-subcategory"
+                                        value={values.followedUpBy}
+                                        onChange={(e) => setValues({ ...values, followedUpBy: e.target.value })}
+                                    >
                                         {/* <option value="">--Select a Telecaller--</option> */}
                                         {callers.length > 0 ? (
                                             <>

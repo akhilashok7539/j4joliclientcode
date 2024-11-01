@@ -118,19 +118,7 @@ const AddTelecallers = (props) => {
 
                 />
 
-                <Autocomplete
-                    apiKey={'AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU'}
-                    onPlaceSelected={(place) => {
-                        if (place.geometry) {
-                            const latitude = place.geometry.location.lat();
-                            const longitude = place.geometry.location.lng();
-                            console.log('Latitude:', latitude);
-                            console.log('Longitude:', longitude);
-                        } else {
-                            console.log('Location data not available');
-                        }
-                    }}
-                />
+              
                 {props.isEdit ? (<Button onClick={handleTelecallerUpdate}>Update</Button>) : (<Button onClick={handleTelecallerSubmit}>Save</Button>)}
 
             </div>

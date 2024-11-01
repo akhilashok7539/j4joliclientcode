@@ -57,12 +57,7 @@ const District = () => {
 
         <div className="follow-up-container">
             <div className='addUserButtoncontainer'>
-                <TextInput
-                    LabelName="search District"
-                    placeholder="Search your district"
-                    name="serach_district"
-                    mt={4}
-                ></TextInput>
+            <div> </div>
                 <button className="add-user-btn" onClick={AddDistrict}>
                     Add District
                 </button>

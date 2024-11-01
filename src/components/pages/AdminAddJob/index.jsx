@@ -37,6 +37,7 @@ const AdminAddJob = () => {
     location: '',
     description: '',
     job_category: '',
+    jobSubCategory: '',
     working_time: '',
     experience_required: '',
     companyName: '',
@@ -72,6 +73,9 @@ const AdminAddJob = () => {
 
   // To set loading button active
   const [buttonLoading, setButtonLoading] = useState(false);
+  const [districtsFull, setdistrictsFull] = useState([]);
+  const [dataListDistrict, setDataListDistrict] = useState([]);
+
 
   // state to set error message
   const [errorMsg, setErrorMsg] = useState({
@@ -118,6 +122,8 @@ const AdminAddJob = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [subCategories, setSubCategories] = useState([]);
   const [categories, setcategories] = useState([]);
+  // telecallers
+  const [callers, setTelecaller] = useState('')
 
   // history to set router url
   const history = useHistory();
@@ -129,6 +135,8 @@ const AdminAddJob = () => {
   useEffect(() => {
     let isMounted = true;
     getJobCategoriesAndSubCategories();
+    getDistrictsList();
+    getTeleCallers();
     const updateJobCategoryArray = async () => {
       try {
         const result = await api.get('/job-category');
@@ -160,6 +168,30 @@ const AdminAddJob = () => {
   const getJobCategoriesAndSubCategories = () => {
     api.get('/job-category?include_hidden=false&sub_category=true').then((res) => {
       setcategories(res.data.job_categories)
+    }).catch((err) => {
+      showErrorToast(toast, err);
+    });
+  }
+  const getDistrictsList = () => {
+    api.get('/district').then((res) => {
+      setdistrictsFull(res.data)
+      const list = []
+      res.data.forEach((item) => {
+        list.push(item.name)
+      })
+      // console.log(list)
+      setDataListDistrict(list)
+
+    }).catch((err) => {
+      showErrorToast(toast, err);
+    });
+  }
+
+
+  const getTeleCallers = () => {
+    api.get('/telecaller').then((res) => {
+      const TelecallersList = res.data.map(x => x.name)
+      setTelecaller(TelecallersList)
     }).catch((err) => {
       showErrorToast(toast, err);
     });
@@ -283,7 +315,7 @@ const AdminAddJob = () => {
         location: values.location,
         description: values.description,
         job_category: values.job_category,
-        jobSubCategory:values.jobSubCategory,
+        jobSubCategory: values.jobSubCategory,
         working_time: values.working_time,
         preferred_gender: gender,
         experience_required: values.experience_required,
@@ -634,7 +666,7 @@ const AdminAddJob = () => {
                 isRequired={true}
                 isInvalid={errorMsg.district !== ''}
                 errorMsg={errorMsg.district}
-                dataList={districtList}
+                dataList={dataListDistrict}
                 mt={4}
                 name="district"
                 value={values.district}
@@ -857,6 +889,7 @@ const AdminAddJob = () => {
                 onBlur={validateData}
                 mt={4}
               />
+             
               <TextInput
                 idName="jobSource"
                 LabelName="Job Source"

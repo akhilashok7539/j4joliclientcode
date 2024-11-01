@@ -144,7 +144,7 @@ const AdminDashboard = () => {
           redirect="/admin"
           userType="admin"
         >
-          <StaffAdminLogin />
+          {/* <StaffAdminLogin /> */}
           <AdminEditJob approved={true} />
         </ProtectedRoute>
         <ProtectedRoute exact path="/admin/dashboard/download" redirect="/admin" userType="admin">

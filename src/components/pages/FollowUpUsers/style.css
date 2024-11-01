@@ -60,3 +60,11 @@
     display: grid;
     grid-template-columns: 50% auto;
   }
+
+  
+  .action-button{
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+
+  }
