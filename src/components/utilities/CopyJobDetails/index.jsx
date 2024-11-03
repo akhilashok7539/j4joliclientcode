@@ -23,7 +23,7 @@ const CopyJobDetails = ({ job }) => {
     { district: 'Kasaragod', number: '04846162222, 8157840476 ' },
   ];
 
-  const contactNo = districtAndContactNo.find((el) => el.district === job.district).number;
+  const contactNo = districtAndContactNo.find((el) => el.district === job.district)?.number;
 
   const copyToClipboard = async (exportFull) => {
     try {

@@ -24,3 +24,26 @@
 .add-job-category .tag-input-container .display-tag .tag-list .tag {
     margin: .5rem;
 }
+
+.label{
+    display: block;
+    text-align: start;
+    font-size: 0.8rem;
+    margin-inline-end: var(--chakra-space-3);
+    margin-bottom: var(--chakra-space-2);
+    font-weight: var(--chakra-fontWeights-medium);
+    transition-property: var(--chakra-transition-property-common);
+    transition-duration: var(--chakra-transition-duration-normal);
+    opacity: 1;
+}
+.actionContainers{
+    margin-top: 14px;
+}
+input[type='radio']
+{
+    margin-right: 7px;
+}
+.radio-buttonContainers{
+    display: grid;
+    grid-template-columns: 100px auto;
+}

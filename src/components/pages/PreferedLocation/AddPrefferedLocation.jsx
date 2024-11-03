@@ -89,10 +89,14 @@ const AddPrefferedLocation = (props) => {
             <div className="add-job-category">
 
                 <Autocomplete
-                    apiKey={'AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU'}
+                    // apiKey={'AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU'}
                     ref={autocompleteRef}
                     onPlaceSelected={handlePlaceSelected}
-                    
+                    // options={{ types: ["(cities)"] }}
+                    options={{
+                        types: ['geocode'], // Use 'geocode' for broader location results
+                        componentRestrictions: { country: 'IN' } // Restrict results to India
+                      }}
                     style={{
                         width: '100%',
                         border: '1px solid #0000001f',

@@ -41,7 +41,7 @@ const ViewJobSubCategory = () => {
             getJobSubCategory()
             toast({
                 title: 'Deleted Successfully',
-                description: 'Tele Caller has been deleted successfully',
+                description: 'Job Sub category has been deleted successfully',
                 status: 'success',
                 duration: 2000,
                 isClosable: true,

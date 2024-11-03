@@ -5,9 +5,9 @@
     margin-right: 100px;
     margin-top: 57px;
 }
-.addUserButtoncontainer{
+.addUserButtoncontainer-followUp{
     display: grid;
-    grid-template-columns: 85% auto;
+    grid-template-columns: 65% 15% auto;
     padding: 7px;
     margin-bottom: 10px;
     background: white;
@@ -67,4 +67,19 @@
     justify-content: flex-end;
     gap: 8px;
 
+  }
+  
+  .dropDown{
+    width: 178px;
+    border: 1px solid #d0d0d0;
+    padding: 11px;
+    height: 41px;
+    border-radius: 4px;
+  }
+  .telecallerFilter {
+    height: 37px;
+    border: 1px solid #a3a1a154;
+    width: 180px;
+    padding: 5px;
+    border-radius: 6px;
   }

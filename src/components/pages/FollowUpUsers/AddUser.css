@@ -115,6 +115,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  gap: 7px;
 }
 
 .dropdown-item:hover {
@@ -152,17 +153,18 @@
 
 }
 
-.locationContainer{
+.locationContainer {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   margin-top: 10px;
 }
 
-.paragraphLocation{
+.paragraphLocation {
   margin-top: 10px;
 }
-.Validation{
+
+.Validation {
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -171,6 +173,29 @@
   font-size: var(--chakra-fontSizes-sm);
   line-height: var(--chakra-lineHeights-normal);
 }
-.isRequired{
+
+.isRequired {
   color: var(--chakra-colors-red-500);
+}
+
+.selectBoxContainer {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.autocomplete {
+  width: 100%;
+  border: 1px solid #0000001f;
+  padding: 11px;
+  margin-top: 18px;
+  border-radius: 4px;
+}
+
+.telecallerName {
+    width: 100%;
+    border: 1px solid #0000001f;
+    padding: 10px;
+    border-radius: 4px;
 }

@@ -129,16 +129,14 @@ const Layout = ({ children }) => {
     },
     {
       icon: <FiFolderPlus />,
-      name: 'Job Sub Category',
-      url: '/admin/dashboard/view-job-Subcategory',
-    },
-
-    {
-      icon: <FiFolderPlus />,
       name: 'Job Category',
       url: '/admin/dashboard/view-job-category',
     },
-
+    {
+      icon: <FiFolderPlus />,
+      name: 'Job Sub Category',
+      url: '/admin/dashboard/view-job-Subcategory',
+    },
     {
       icon: <FiSearch />,
       name: 'Jobseeker Search',

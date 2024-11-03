@@ -19,10 +19,12 @@ const AdminJobs = ({ approved, url }) => {
 
   const [jobCount, setJobCount] = useState('');
 
+  const [districtList, setDistrictLists] = useState([]);
+
   const history = useHistory();
 
   // district list for select input
-  const districtList = getDistrictsForFilter()
+  // const districtList = getDistrictsForFilter()
 
   const statusList = ['All', 'Active', 'Expired', 'Hidden'];
 
@@ -39,6 +41,7 @@ const AdminJobs = ({ approved, url }) => {
   /* eslint-disable */
 
   useEffect(() => {
+    getDistrictsList()
     api
       .get('/job-category?include_hidden=true')
       .then((res) => {
@@ -58,6 +61,20 @@ const AdminJobs = ({ approved, url }) => {
   const handleJobCountCallback = (data) => {
     setJobCount(data);
   };
+  const getDistrictsList = () => {
+    api.get('/district').then((res) => {
+      const list = []
+      list.push('All')
+      res.data.forEach((item) => {
+        list.push(item.name)
+      })
+      // console.log(list)
+      setDistrictLists(list)
+
+    }).catch((err) => {
+      showErrorToast(toast, err);
+    });
+  }
   return (
     <div className="admin-jobs">
       <div className="filters">

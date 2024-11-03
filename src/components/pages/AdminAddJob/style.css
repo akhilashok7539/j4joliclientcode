@@ -53,25 +53,45 @@
 
 @media only screen and (max-width: 1000px) {
   .add-job .form .row {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .add-job .form .row .column {
-      margin: 0;
+    margin: 0;
   }
 
   .add-job .form .row .column:first-child {
-      margin-right: 0;
+    margin-right: 0;
   }
 
   .add-job .form .row .column:last-child {
-      margin-left: 0;
+    margin-left: 0;
   }
 }
 
 @media only screen and (max-width: 500px) {
   .add-job .form .row .column .container {
-      padding: 1rem;
-      margin: 0.5rem 0;
+    padding: 1rem;
+    margin: 0.5rem 0;
   }
+}
+
+.labelValidation {
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
+
+.selectBoxContainer {
+    width: 100%;
+    border: 1px solid #0000001f;
+    padding: 10px;
+    border-radius: 4px;
+    
+}
+.autoCompleteDropDownBox{
+  width: 100%;
+  border: 1px solid #0000001f;
+  padding: 11px;
+  margin-top: 18px;
+  border-radius: 4px;
 }

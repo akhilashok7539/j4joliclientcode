@@ -773,7 +773,11 @@ const AdminEditJob = (approved) => {
                   mt={4}
                 /> */}
                 <Autocomplete
-                  apiKey={'AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU'}
+                  // apiKey={'AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU'}
+                  options={{
+                    types: ['geocode'], // Use 'geocode' for broader location results
+                    componentRestrictions: { country: 'IN' } // Restrict results to India
+                  }}
                   onPlaceSelected={handlePlaceSelected}
                   placeholder='Search your location'
                   style={{

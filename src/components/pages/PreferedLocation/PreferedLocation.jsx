@@ -42,7 +42,7 @@ const PreferedLocation = () => {
             getPrefferedLocations()
             toast({
                 title: 'Deleted Successfully',
-                description: 'District has been deleted successfully',
+                description: 'Preffered Location has been deleted successfully',
                 status: 'success',
                 duration: 2000,
                 isClosable: true,

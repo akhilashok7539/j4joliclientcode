@@ -63,7 +63,6 @@ const AddUser = () => {
     const autocompleteRef = useRef(null);
     const [prefferedlocationFullList, setLocationsListFull] = useState([])
     const [prefferedlocationList, setPrefferedLocations] = useState([])
-
     const [selectedCategory, setSelectedCategory] = useState('');
     const [subCategories, setSubCategories] = useState([]);
     const [categories, setcategories] = useState([]);
@@ -97,7 +96,6 @@ const AddUser = () => {
 
         const fetchData = async () => {
             try {
-                // Call all three functions here
                 await updateJobCategoryArray();
                 await getDistrictsList();
                 await getPrefferedLocations();
@@ -107,16 +105,12 @@ const AddUser = () => {
                 if (isMounted) showErrorToast(toast, err);
             }
         };
-
         const updateJobCategoryArray = async () => {
             const result = await api.get('/job-category');
             const jobCategoryArray = result.data.job_categories.map(cat => cat.name);
             if (isMounted) setJobCategories(jobCategoryArray);
         };
-
-        // Call the fetchData function
         fetchData();
-
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
             document.removeEventListener("mousedown", handlerOutsideClick);
@@ -136,7 +130,6 @@ const AddUser = () => {
             res.data.forEach((item) => {
                 list.push(item.name)
             })
-            // console.log(list)
             setDataListDistrict(list)
 
         }).catch((err) => {
@@ -175,7 +168,6 @@ const AddUser = () => {
 
 
     const handleCategoryChange = (event) => {
-
         const categoryId = event.target.value;
         const category = categories.find(cat => cat.id === categoryId);
         setErrorJobCategroy(false)
@@ -195,19 +187,16 @@ const AddUser = () => {
             ...prevValues,
             followedUpBy: telecallerId,
         }));
-
     };
 
     const handleSubCategoryChange = (event) => {
         const selectedSubCategory = event.target.value;
-
         // Update jobSubCategory in the form state
         setValues((prevValues) => ({
             ...prevValues,
             jobSubCategory: selectedSubCategory
         }));
     };
-
 
     const getTrueValues = (obj) => {
         // Use Object.entries to get an array of key-value pairs
@@ -223,7 +212,6 @@ const AddUser = () => {
         setIsOpenSubcat(!isOpenSubcat);
     };
 
-
     const handleOptionClick = (option) => {
         setErrorPrefferedLocation(false);
         if (selectedOptions.includes(option)) {
@@ -231,7 +219,6 @@ const AddUser = () => {
         } else {
             setSelectedOptions([...selectedOptions, option]);
         }
-
     };
 
     const handleOptionClickSubCat = (option) => {
@@ -244,13 +231,10 @@ const AddUser = () => {
     const isSelected = (option) => selectedOptions.includes(option);
     const isSelectedSubCat = (option) => selectedOptionsSubCat.includes(option);
 
-
-
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setIsOpen(false);
         }
-
     };
 
     const handlerOutsideClick = (event) => {
@@ -258,7 +242,6 @@ const AddUser = () => {
             setIsOpenSubcat(false)
         }
     }
-
 
     // function to post job after checking api call
     const onButtonClick = () => {
@@ -272,12 +255,9 @@ const AddUser = () => {
         showErrorMsg('locationSelected', values.locationSelected, setErrorMsg);
         checkGenderError();
 
-        if(selectedOptions.length >0 || locations.length>0)
-        {
-            console.log("location  selected")
+        if (selectedOptions.length > 0 || locations.length > 0) {
             setErrorPrefferedLocation(false)
-        }else{
-            console.log("location not selected")
+        } else {
             setErrorPrefferedLocation(true)
         }
         if (values.job_category === '') {
@@ -405,25 +385,18 @@ const AddUser = () => {
         setErrorPrefferedLocation(false);
         const name = place.name || place.formatted_address;
         const firstPart = name ? name.split(',')[0] : '';
-        setPlace(firstPart);
-
         if (place.geometry) {
             const lat = place.geometry.location.lat();
             const lng = place.geometry.location.lng();
-
             setCoordinates({ lat, lng });
-            // console.log("coordinates",coordinates)
-
             const prefObj = {
                 type: "Point",
                 coordinates: [lng, lat],  // Note: usually [lng, lat]
                 name: firstPart
             };
-
             // Use the functional form of setLocations to add the new object
             setLocations((prevLocations) => [...prevLocations, prefObj]);
         }
-
         // setLocations((prevLocations) => [...prevLocations, firstPart]);
         setInputValue('');
     };
@@ -432,7 +405,7 @@ const AddUser = () => {
         const updatedLocations = locations.filter((_, i) => i !== index);
         setLocations(updatedLocations);
     };
-    // console.log("categories", categories.job_categories)
+
     return (
         <>
             <div className="add-job">
@@ -515,13 +488,6 @@ const AddUser = () => {
                                     <IoLocationSharp className="icon" color="#1565C0" />
                                     <h4>Location Details</h4>
                                 </div>
-                                {/* <TextInput
-                                    idName="districts"
-                                    LabelName="Districts"
-                                    placeholder="Enter  location"
-                                    name="location"
-                                    mt={4}
-                                /> */}
                                 <SelectInput
                                     isRequired={true}
                                     isInvalid={errorMsg.district !== ''}
@@ -535,22 +501,8 @@ const AddUser = () => {
                                     onBlur={validateData}
                                 />
 
-                                {/* <SelectInput
-                                    isRequired={false}
-                                    isInvalid={false}
-                                    dataList={prefferedlocationList}
-                                    mt={4}
-                                    name="prefferedLocations"
-                                    value={values.locationSelected}
-                                    onChange={(e) => setValues({ ...values, locationSelected: e.target.value })}
-                                    LabelName="Preffered Locations"
-                                    onBlur={validateData}
-                                /> */}
-
                                 <label className="dropdown-label">Preffered Locations <span className='isRequired'>*</span></label>
-
                                 <div className="dropdown-container" ref={dropdownRef}>
-
                                     <div className="dropdown-header" onClick={toggleDropdown}>
                                         {selectedOptions.length > 0
                                             ? selectedOptions.join(", ")
@@ -578,38 +530,18 @@ const AddUser = () => {
                                         </div>
                                     )}
                                 </div>
-
-                                {/* errorPrefferedLocation
-                                    errorJobCategroy */}
-                                {/* <Autocomplete
-                                    apiKey={'AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU'}
-                                    onPlaceSelected={handlePlaceSelected}
-                                    placeholder='Search your location'
-                                    style={{
-                                        width: '100%',
-                                        border: '1px solid #0000001f',
-                                        padding: '11px',
-                                        marginTop: '18px',
-                                        borderRadius: '4px'
-                                    }}
-
-                                /> */}
                                 <Autocomplete
-                                    apiKey="AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU"
+                                    options={{
+                                        types: ['geocode'], // Use 'geocode' for broader location results
+                                        componentRestrictions: { country: 'IN' } // Restrict results to India
+                                    }}
                                     onPlaceSelected={handlePlaceSelected}
                                     placeholder="Search your location"
-                                    style={{
-                                        width: '100%',
-                                        border: '1px solid #0000001f',
-                                        padding: '11px',
-                                        marginTop: '18px',
-                                        borderRadius: '4px'
-                                    }}
+                                    className='autocomplete'
                                     value={inputValue}
                                     onChange={(e) => setInputValue(e.target.value)}
                                 />
                                 {errorPrefferedLocation ? <p className='Validation'>Choose atleast one location</p> : <></>}
-
 
                                 <div className='locationContainer' >
                                     {locations.map((location, index) => (
@@ -634,7 +566,6 @@ const AddUser = () => {
                             <div className="container">
                                 <div className="heading-container">
                                     <FcInspection className="icon" />
-
                                     <h4>Job Requirements</h4>
                                 </div>
                                 <TextInput
@@ -650,25 +581,6 @@ const AddUser = () => {
                                     errorMsg={errorMsg.experience_required}
                                     mt={4}
                                 />
-                                {/* <SelectInput
-                                    isRequired={true}
-                                    isInvalid={errorMsg.job_category !== ''}
-                                    errorMsg={errorMsg.job_category}
-                                    dataList={jobCategories}
-                                    mt={4}
-                                    name="job_category"
-                                    value={values.job_category}
-                                    onChange={onChange}
-                                    LabelName="Job Category"
-                                    onBlur={validateData}
-                                /> */}
-
-                                {/* <TextInput
-                                    idName="subjobcategory"
-                                    LabelName="Job Sub Category"
-                                    mt={4}
-                                /> */}
-
 
                                 <div className='containerDiv'>
                                     <label style={{ fontSize: '0.8rem' }}>Job Category <span className='isRequired'>*</span></label>
@@ -688,38 +600,17 @@ const AddUser = () => {
                                                 </option>
                                             ))}
                                         </select>
-
-
                                     ) : (
                                         <select id="job-category" >
                                             <option disabled value="">No data</option>
                                         </select>
                                     )}
                                     {errorJobCategroy ? <p className='Validation'>Job Category cannot be empty</p> : <></>}
-
                                 </div>
 
                                 <div className='containerDiv'>
-
-                                    {/* <label style={{ fontSize: '0.8rem' }}>Job Sub Category</label>
-                                    <select style={{
-                                        width: '100%',
-                                        border: '1px solid #0000001f',
-                                        padding: '10px',
-
-                                        borderRadius: '4px'
-                                    }} id="job-subcategory" onChange={handleSubCategoryChange} disabled={!selectedCategory}>
-                                        <option disabled value="">Select a subcategory</option>
-                                        {subCategories.map(subCategory => (
-                                            <option key={subCategory._id} value={subCategory._id}>
-                                                {subCategory.name}
-                                            </option>
-                                        ))}
-                                    </select> */}
-
                                     <label style={{ fontSize: '0.8rem' }}>Job Sub Category</label>
                                     <div className="dropdown-container" ref={dropdownRefSubCat}>
-
                                         <div className="dropdown-header" onClick={toggleDropdownSubCat}>
                                             {selectedOptionsSubCat.length > 0
                                                 ? selectedOptionsSubCat.join(", ")
@@ -754,20 +645,11 @@ const AddUser = () => {
                             <div className="container">
                                 <div className="heading-container">
                                     <FcAssistant className="icon" />
-
                                     <h4>Tele-Caller Details</h4>
                                 </div>
                                 <div className='containerDiv'>
-
                                     <label style={{ fontSize: '0.8rem' }}>Telecaller Name</label>
-                                    <select style={{
-                                        width: '100%',
-                                        border: '1px solid #0000001f',
-                                        padding: '10px',
-
-                                        borderRadius: '4px'
-                                    }} id="job-subcategory" onChange={handleTelecallerChange} >
-                                        {/* <option value="">--Select a Telecaller--</option> */}
+                                    <select className='telecallerName' id="job-subcategory" onChange={handleTelecallerChange} >
                                         {callers.length > 0 ? (
                                             <>
                                                 <option disabled value="">Select a telecaller</option>
@@ -782,20 +664,16 @@ const AddUser = () => {
                                         )}
                                     </select>
                                 </div>
-
-
                             </div>
 
                             <Button onClick={onButtonClick} >
                                 Add User
                             </Button>
-                            <Button colorScheme="red" >
+                            <Button colorScheme="red" onClick={resetForm}>
                                 Reset Form
                             </Button >
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </>

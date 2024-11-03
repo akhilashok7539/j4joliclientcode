@@ -71,7 +71,7 @@ const ViewJobCategory = () => {
       console.log(item)
             const ENDPOINT = '/job-category/'+item.id
             api.delete(ENDPOINT).then((res) => {
-                
+                getJobCategory(true);
                 toast({
                     title: 'Deleted Successfully',
                     description: 'District has been deleted successfully',
@@ -89,15 +89,6 @@ const ViewJobCategory = () => {
         <>
             <div className="follow-up-container">
                 <div className='addUserButtoncontainer'>
-                    {/* <TextInput
-                        type="text"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                        placeholder="Search Category"
-                        name="search_user"
-                        className="text-input"
-                        style={{ marginTop: '4px' }} // Since you were using `mt={4}` in Chakra UI
-                    /> */}
                       <div> </div>
                     <button className="add-user-btn" onClick={addJobCategory}>
                         Add Categories

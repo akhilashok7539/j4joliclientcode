@@ -4,6 +4,7 @@ import Button from '../../utilities/Button';
 import {
     FcInspection,
     FcAssistant,
+    FcServices,
 } from 'react-icons/fc';
 import {
     IoLocationSharp,
@@ -39,6 +40,8 @@ const UpdateUser = () => {
         job_category: '',
         jobSubCategory: '',
         followedUpBy: '',
+        followUpUserStatus: '',
+        followUpUserRemarks: ''
 
     })
     const [gender, setGender] = useState({ male: false, female: false, others: false });
@@ -53,7 +56,11 @@ const UpdateUser = () => {
         location: '',
         job_category: '',
         jobSubCategory: '',
-        followedUpBy: ''
+        followedUpBy: '',
+        followUpUserStatus: '',
+        followUpUserRemarks: ''
+
+
 
     });
     const [districtsFull, setdistrictsFull] = useState([]);
@@ -86,9 +93,12 @@ const UpdateUser = () => {
     const [inputValue, setInputValue] = useState('');
 
 
+
+
     // console.log("districtList",districtList)
     const history = useHistory();
     const toast = useToast();
+    const followUpUserStatusList = ['Pending', 'Informed']
     useEffect(() => {
         let isMounted = true;
         document.addEventListener("mousedown", handleClickOutside);
@@ -134,8 +144,6 @@ const UpdateUser = () => {
 
     const patchValue = async () => {
         const data = JSON.parse(sessionStorage.getItem("UserDetailsUpdate"))
-        // setValues(data)
-
 
         const categoryId = data.jobCategory._id;
         console.log("categories", categories)
@@ -145,44 +153,30 @@ const UpdateUser = () => {
 
         setValues((prevValues) => ({
             ...prevValues,
-            name:data.name,
-            phoneNumber:data.phoneNumber,
+            name: data.name,
+            phoneNumber: data.phoneNumber,
             experience_required: data.experience,
             job_category: data.jobCategory._id,
 
         }));
-        // console.log("prefferedlocationFullList", prefferedlocationFullList);
-        // console.log("data.preferredLocation", data.preferredLocation);
 
         const filteredList = prefferedlocationFullList.filter(location =>
             !data.preferredLocation.some(selected => selected._id === location._id)
         );
         const mapLocationNames = filteredList.map(x => x.name)
-        // setSelectedOptions(mapLocationNames)
         setLocations(data.preferredLocation)
-        // const selectedIds = new Set(data.preferredLocation.map(location => location.name));
-        // console.log(selectedIds)
-
-
-        // Generate lists for matching and non-matching items
-        // const matchingList = prefferedlocationFullList.filter(location => selectedIds.has(location.name));
-        // const nonMatchingList = prefferedlocationFullList.filter(location => !selectedIds.has(location.name));
-        // console.log("Matching List:", matchingList);
-        // console.log("Non-Matching List:", nonMatchingList);
-        // console.log("subCategories",subCategories)
-
-        // const FilterSubCat = subCategories.filter(cat => data.jobSubCategory.includes(cat._id) )
         const list2Ids = new Set(data.jobSubCategory.map(item => item._id));
         const commonItems = subCategories.filter(item => list2Ids.has(item._id));
         const filterItems = commonItems.map(x => x.name);
 
         setSelectedOptionsSubCat(filterItems)
-        console.log("Common Items:", filterItems);
 
         setValues((prevValues) => ({
             ...prevValues,
             district: data.preferredDistricts[0] ? data.preferredDistricts[0].name : '',
-            followedUpBy: data.followedUpBy._id
+            followedUpBy: data.followedUpBy._id,
+            followUpUserRemarks: data.followUps[0]?.remarks,
+            followUpUserStatus: data.followUps[0]?.status,
         }));
 
         if (data.gender === 'male') {
@@ -200,8 +194,7 @@ const UpdateUser = () => {
                 female: true,
             }));
         }
-        // console.log("matchingList", matchingList);
-        // console.log("nonMatchingList", nonMatchingList);
+
 
     }
 
@@ -224,7 +217,6 @@ const UpdateUser = () => {
             res.data.forEach((item) => {
                 list.push(item.name)
             })
-            // console.log(list)
             setDataListDistrict(list)
 
         }).catch((err) => {
@@ -240,16 +232,6 @@ const UpdateUser = () => {
             })
             setPrefferedLocations(list)
 
-            // console.log("prefferedlocationFullList",prefferedlocationFullList)
-            // const data = JSON.parse(sessionStorage.getItem("UserDetailsUpdate"))
-            // const selectedIds = new Set(data.preferredLocation.map(location => location.name));
-            // console.log(selectedIds)
-            // // Generate lists for matching and non-matching items
-            // const matchingList = prefferedlocationFullList.filter(location => selectedIds.has(location.name));
-            // const nonMatchingList = prefferedlocationFullList.filter(location => !selectedIds.has(location.name));
-
-            // console.log("Matching List:prefferedlocationFullList", matchingList);
-            // console.log("Non-Matching List:prefferedlocationFullList", nonMatchingList);
         }).catch((err) => {
             showErrorToast(toast, err);
         });
@@ -279,11 +261,10 @@ const UpdateUser = () => {
 
         setSelectedCategory(categoryId);
         setSubCategories(category ? category.subCategories : []);
-        // setSelectedOptionsSubCat([])
         setValues((prevValues) => ({
             ...prevValues,
             job_category: categoryId,
-            jobSubCategory: '' // Reset jobSubCategory when category changes
+            jobSubCategory: ''
         }));
 
     };
@@ -354,7 +335,12 @@ const UpdateUser = () => {
         }
     }
 
-
+    const handleInputChange = (event) => {
+        setValues({
+            ...values,
+            followUpUserRemarks: event.target.value,
+        });
+    };
 
 
     // function to post job after checking api call
@@ -371,9 +357,11 @@ const UpdateUser = () => {
         checkGenderError();
         console.log(values)
         if (
-            values.name !== ''
-
-
+            values.name !== '',
+            values.phoneNumber != '',
+            values.experience_required !== '',
+            values.job_category != '',
+            values.district !== ''
         ) {
             // console.log("selectedOptions", selectedOptions)
             const prefLoc = []
@@ -395,23 +383,21 @@ const UpdateUser = () => {
             const trueValues = getTrueValues(gender);
             const currentDate = new Date(); // Current date and time
             const currentIsoString = currentDate.toISOString(); // Convert to ISO string
-            console.log(selectedOptionsSubCat)
-            console.log(subCategories)
-            // const list1 = subCategories
 
+            // const list1 = subCategories
             // const list2Ids = new Set(selectedOptionsSubCat.map(item => item._id));
             // const commonItems = subCategories.filter(item => selectedOptionsSubCat.has(item.name));
             // const filterItems = commonItems.map(x => x.name);
             const commonItems = subCategories.filter(item => selectedOptionsSubCat.includes(item.name));
             // console.log(commonItems.map(x=>x._id))
-            values.jobSubCategory = commonItems.map(x=>x._id)
+            values.jobSubCategory = commonItems.map(x => x._id)
             // values.jobSubCategory = selectedOptionsSubCat.map(x=>x._id)
-       
+
             const job = {
                 name: values.name,
                 phoneNumber: values.phoneNumber,
                 experience: values.experience_required,
-                district: selectDist,
+                preferredDistricts: selectDist,
                 jobCategory: values.job_category,
                 jobSubCategory: values.jobSubCategory,
                 gender: trueValues[0],
@@ -420,9 +406,9 @@ const UpdateUser = () => {
                 followUpStatus: "Pending",
                 followUps: [
                     {
-                        "status": "Pending",
+                        "status": values.followUpUserStatus,
                         "date": currentIsoString,
-                        "remarks": "Will follow up next week."
+                        "remarks": values.followUpUserRemarks
                     }
                 ]
             };
@@ -430,26 +416,26 @@ const UpdateUser = () => {
             // //   setButtonLoading(true);
             const data = JSON.parse(sessionStorage.getItem("UserDetailsUpdate"))
 
-            const API_ENDPOINT = '/follow-up-user/' +data._id
-                api
-                    .patch(API_ENDPOINT, job)
-                    .then((res) => {
-                        //   setButtonLoading(false);
-                        toast({
-                            title: 'Successfully Added',
-                            description: 'Follow Up user updated',
-                            status: 'success',
-                            duration: 3000,
-                            isClosable: true,
-                        });
-                        if (!dataPersist) {
-                            history.push('/admin/dashboard/follow-up');
-                        }
-                    })
-                    .catch((err) => {
-                        //   setButtonLoading(false);
-                        showErrorToast(toast, err);
+            const API_ENDPOINT = '/follow-up-user/' + data._id
+            api
+                .patch(API_ENDPOINT, job)
+                .then((res) => {
+                    //   setButtonLoading(false);
+                    toast({
+                        title: 'Successfully Added',
+                        description: 'Follow Up user updated',
+                        status: 'success',
+                        duration: 3000,
+                        isClosable: true,
                     });
+                    if (!dataPersist) {
+                        history.push('/admin/dashboard/follow-up');
+                    }
+                })
+                .catch((err) => {
+                    //   setButtonLoading(false);
+                    showErrorToast(toast, err);
+                });
         }
         else {
             console.log("form invalud")
@@ -487,7 +473,10 @@ const UpdateUser = () => {
             job_category: '',
             jobSubCategory: '',
             locationSelected: '',
-            followedUpBy: ''
+            followedUpBy: '',
+            followUpUserStatus: '',
+            followUpUserRemarks: ''
+
         });
         setGender({ male: true, female: true, others: true });
     };
@@ -524,7 +513,6 @@ const UpdateUser = () => {
         const updatedLocations = locations.filter((_, i) => i !== index);
         setLocations(updatedLocations);
     };
-    // console.log("categories", categories.job_categories)
     return (
         <>
             <div className="add-job">
@@ -607,13 +595,7 @@ const UpdateUser = () => {
                                     <IoLocationSharp className="icon" color="#1565C0" />
                                     <h4>Location Details</h4>
                                 </div>
-                                {/* <TextInput
-                                    idName="districts"
-                                    LabelName="Districts"
-                                    placeholder="Enter  location"
-                                    name="location"
-                                    mt={4}
-                                /> */}
+
                                 <SelectInput
                                     isRequired={true}
                                     isInvalid={errorMsg.district !== ''}
@@ -627,20 +609,8 @@ const UpdateUser = () => {
                                     onBlur={validateData}
                                 />
 
-                                {/* <SelectInput
-                                    isRequired={false}
-                                    isInvalid={false}
-                                    dataList={prefferedlocationList}
-                                    mt={4}
-                                    name="prefferedLocations"
-                                    value={values.locationSelected}
-                                    onChange={(e) => setValues({ ...values, locationSelected: e.target.value })}
-                                    LabelName="Preffered Locations"
-                                    onBlur={validateData}
-                                /> */}
 
                                 <label className="dropdown-label">Preffered Locations</label>
-
                                 <div className="dropdown-container" ref={dropdownRef}>
 
                                     <div className="dropdown-header" onClick={toggleDropdown}>
@@ -673,21 +643,13 @@ const UpdateUser = () => {
 
 
 
-                                {/* <Autocomplete
-                                    apiKey={'AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU'}
-                                    onPlaceSelected={handlePlaceSelected}
-                                    placeholder='Search your location'
-                                    style={{
-                                        width: '100%',
-                                        border: '1px solid #0000001f',
-                                        padding: '11px',
-                                        marginTop: '18px',
-                                        borderRadius: '4px'
-                                    }}
 
-                                /> */}
                                 <Autocomplete
-                                    apiKey="AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU"
+                                    // apiKey="AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU"
+                                    options={{
+                                        types: ['geocode'], // Use 'geocode' for broader location results
+                                        componentRestrictions: { country: 'IN' } // Restrict results to India
+                                    }}
                                     onPlaceSelected={handlePlaceSelected}
                                     placeholder="Search your location"
                                     style={{
@@ -742,40 +704,14 @@ const UpdateUser = () => {
                                     errorMsg={errorMsg.experience_required}
                                     mt={4}
                                 />
-                                {/* <SelectInput
-                                    isRequired={true}
-                                    isInvalid={errorMsg.job_category !== ''}
-                                    errorMsg={errorMsg.job_category}
-                                    dataList={jobCategories}
-                                    mt={4}
-                                    name="job_category"
-                                    value={values.job_category}
-                                    onChange={onChange}
-                                    LabelName="Job Category"
-                                    onBlur={validateData}
-                                /> */}
-
-                                {/* <TextInput
-                                    idName="subjobcategory"
-                                    LabelName="Job Sub Category"
-                                    mt={4}
-                                /> */}
 
 
                                 <div className='containerDiv'>
                                     <label style={{ fontSize: '0.8rem' }}>Job Category</label>
                                     {categories.length > 0 ? (
-
                                         <select
-
-                                            style={{
-                                                width: '100%',
-                                                border: '1px solid #0000001f',
-                                                padding: '10px',
-                                                borderRadius: '4px'
-                                            }}
+                                            className='selectBoxContainer'
                                             id="job-category" onChange={handleCategoryChange}
-
                                             value={values.job_category}
                                         >
                                             <option disabled value="">Select a category</option>
@@ -785,8 +721,6 @@ const UpdateUser = () => {
                                                 </option>
                                             ))}
                                         </select>
-
-
                                     ) : (
                                         <select id="job-category" >
                                             <option disabled value="">No data</option>
@@ -795,26 +729,8 @@ const UpdateUser = () => {
                                 </div>
 
                                 <div className='containerDiv'>
-
-                                    {/* <label style={{ fontSize: '0.8rem' }}>Job Sub Category</label>
-                                    <select style={{
-                                        width: '100%',
-                                        border: '1px solid #0000001f',
-                                        padding: '10px',
-
-                                        borderRadius: '4px'
-                                    }} id="job-subcategory" onChange={handleSubCategoryChange} disabled={!selectedCategory}>
-                                        <option disabled value="">Select a subcategory</option>
-                                        {subCategories.map(subCategory => (
-                                            <option key={subCategory._id} value={subCategory._id}>
-                                                {subCategory.name}
-                                            </option>
-                                        ))}
-                                    </select> */}
-
                                     <label style={{ fontSize: '0.8rem' }}>Job Sub Category</label>
                                     <div className="dropdown-container" ref={dropdownRefSubCat}>
-
                                         <div className="dropdown-header" onClick={toggleDropdownSubCat}>
                                             {selectedOptionsSubCat.length > 0
                                                 ? selectedOptionsSubCat.join(", ")
@@ -855,13 +771,7 @@ const UpdateUser = () => {
                                 <div className='containerDiv'>
 
                                     <label style={{ fontSize: '0.8rem' }}>Telecaller Name</label>
-                                    <select style={{
-                                        width: '100%',
-                                        border: '1px solid #0000001f',
-                                        padding: '10px',
-
-                                        borderRadius: '4px'
-                                    }} id="job-subcategory"
+                                    <select className='telecallerName' id="job-subcategory"
                                         value={values.followedUpBy}
                                         onChange={(e) => setValues({ ...values, followedUpBy: e.target.value })}
                                     >
@@ -883,13 +793,30 @@ const UpdateUser = () => {
 
 
                             </div>
+                            <div className="container">
+                                <div className="heading-container">
+                                    <FcServices className="icon" />
 
+                                    <h4>Follow-Up Users</h4>
+                                </div>
+                                <div className='containerDiv'>
+                                    <label className="dropdown-label">Follow Up User Status</label>
+                                    <select className='selectBoxContainer' value={values.followUpUserStatus}
+                                        onChange={(e) => setValues({ ...values, followUpUserStatus: e.target.value })}
+                                        name="" >
+                                        <option value="">Select a status</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Informed">Informed</option>
+                                    </select>
+                                   
+                                    <label className="dropdown-label">Remarks</label>
+                                    <input className='selectBoxContainer' type="text" placeholder='Remarks' onChange={handleInputChange} value={values.followUpUserRemarks} />
+                                </div>
+                            </div>
                             <Button onClick={onButtonClick} >
                                 Update User
                             </Button>
-                            <Button colorScheme="red" >
-                                Reset Form
-                            </Button >
+
                         </div>
                     </div>
 

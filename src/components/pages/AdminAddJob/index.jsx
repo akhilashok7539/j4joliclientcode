@@ -478,40 +478,19 @@ const AdminAddJob = () => {
                 errorMsg={errorMsg.title}
               />
 
-              {/* <SelectInput
-                isRequired={true}
-                isInvalid={errorMsg.job_category !== ''}
-                errorMsg={errorMsg.job_category}
-                dataList={jobCategories}
-                mt={4}
-                name="job_category"
-                value={values.job_category}
-                onChange={onChange}
-                LabelName="Job Category"
-                onBlur={validateData}
-              /> */}
               <div className='containerDiv'>
-                <label style={{ fontSize: '0.8rem' }}>Job Category</label>
+                <label className='labelValidation'>Job Category</label>
                 {categories.length > 0 ? (
-
                   <select
-
-                    style={{
-                      width: '100%',
-                      border: '1px solid #0000001f',
-                      padding: '10px',
-                      borderRadius: '4px'
-                    }}
+                    className='selectBoxContainer'
                     id="job-category" onChange={handleCategoryChange}>
-                    <option value="">--Select a category--</option>
+                    <option value="">Select a category</option>
                     {categories.map(category => (
                       <option key={category.id} value={category.id}>
                         {category.name}
                       </option>
                     ))}
                   </select>
-
-
                 ) : (
                   <select id="job-category" >
                     <option value="">No data</option>
@@ -521,15 +500,11 @@ const AdminAddJob = () => {
 
               <div className='containerDiv'>
 
-                <label style={{ fontSize: '0.8rem' }}>Job Sub Category</label>
-                <select style={{
-                  width: '100%',
-                  border: '1px solid #0000001f',
-                  padding: '10px',
-
-                  borderRadius: '4px'
-                }} id="job-subcategory" onChange={handleSubCategoryChange} disabled={!selectedCategory}>
-                  <option value="">--Select a subcategory--</option>
+                <label className='labelValidation'>Job Sub Category</label>
+                <select
+                  className='selectBoxContainer'
+                  id="job-subcategory" onChange={handleSubCategoryChange} disabled={!selectedCategory}>
+                  <option value="">Select a subcategory</option>
                   {subCategories.map(subCategory => (
                     <option key={subCategory._id} value={subCategory._id}>
                       {subCategory.name}
@@ -649,12 +624,6 @@ const AdminAddJob = () => {
                 onBlur={validateData}
                 mt={4}
               />
-
-
-
-
-
-
             </div>
 
             <div className="container">
@@ -674,33 +643,15 @@ const AdminAddJob = () => {
                 LabelName="District"
                 onBlur={validateData}
               />
-              {/* <TextInput
-                idName="location"
-                isRequired={true}
-                isInvalid={errorMsg.location !== ''}
-                LabelName="Location"
-                placeholder="Enter  location"
-                value={values.location}
-                name="location"
-                onChange={onChange}
-                onBlur={validateData}
-                errorMsg={errorMsg.location}
-                mt={4}
-              /> */}
-
 
               <Autocomplete
-                apiKey={'AIzaSyA5jp74cQNLfkHhs4u9jUg_2g-N5xUa9VU'}
+                className='autoCompleteDropDownBox'
                 onPlaceSelected={handlePlaceSelected}
                 placeholder='Search your location'
-                style={{
-                  width: '100%',
-                  border: '1px solid #0000001f',
-                  padding: '11px',
-                  marginTop: '18px',
-                  borderRadius: '4px'
+                options={{
+                  types: ['geocode'],
+                  componentRestrictions: { country: 'IN' }
                 }}
-
               />
             </div>
           </div>
@@ -889,7 +840,7 @@ const AdminAddJob = () => {
                 onBlur={validateData}
                 mt={4}
               />
-             
+
               <TextInput
                 idName="jobSource"
                 LabelName="Job Source"
