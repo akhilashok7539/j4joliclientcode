@@ -121,7 +121,7 @@ const ViewJobCategory = () => {
                                 ))
                             ) : (
                                 <Tr>
-                                    <Td colSpan="2" style={{ textAlign: 'center' }}>No Category found</Td>
+                                    <Td colSpan="4" style={{ textAlign: 'center' }}>No Category found</Td>
                                 </Tr>
                             )}
 

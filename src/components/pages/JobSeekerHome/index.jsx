@@ -62,22 +62,30 @@ const JobSeekerHome = () => {
       // Api call to get all job count
       const jobCount = await api.get('/job-category/job-count');
       // Map trough all job category and push all category name and set count as 0
+      console.log("jobCategoriesArray",res.data.job_categories)
+     
       res.data.job_categories.map((item) => {
-        jobCategoriesArray.push({ category: item.name, count: 0, sub_category: item.sub_category });
+        jobCategoriesArray.push({ category: item.name, count: 0, sub_category: item.sub_category});
         return ' ';
       });
+      console.log("jobCategoriesArray",jobCategoriesArray)
+      console.log(" jobCount.data.jobCount", jobCount.data.jobCount)
       // Map through all job count and correct all count value in list
       jobCount.data.jobCount.map((item) => {
         let id = item._id;
+        let catName = item.categoryName
         let count = item.count;
         for (let i = 0; i < jobCategoriesArray.length; i++) {
-          if (jobCategoriesArray[i].category === id) jobCategoriesArray[i].count = count;
+          if (jobCategoriesArray[i].category === catName) jobCategoriesArray[i].count = count;
         }
 
         return ' ';
       });
       // Update state for job category
       setJobCategories([...jobCategoriesArray]);
+
+
+      console.log(jobCategories)
     } catch (err) {
       setLoading(false);
       showErrorToast(toast, err);
@@ -95,6 +103,7 @@ const JobSeekerHome = () => {
             count: res.data.jobCount[i].count,
           });
         }
+        // console.log("jobCategoryArray",jobCategoryArray)
 
         setJobCategories([...jobCategoryArray]);
         setLoading(false);
@@ -112,6 +121,9 @@ const JobSeekerHome = () => {
   };
 
   const getSubCategories = (categoryName) => {
+    console.log("catName",categoryName)
+    console.log("jobCategories",jobCategories)
+
     const subCategories = jobCategories.filter((item) => item.category === categoryName)[0]
       .sub_category;
     return subCategories;
@@ -133,7 +145,7 @@ const JobSeekerHome = () => {
                 The following jobs will be available in this category <br />
                 <OrderedList>
                   {modalSubCategories.map((item) => {
-                    return <ListItem>{item}</ListItem>;
+                    return <ListItem>{item.name}</ListItem>;
                   })}
                 </OrderedList>
               </ModalBody>
@@ -189,12 +201,16 @@ const JobSeekerHome = () => {
         <div className="job-category-wrapper">
           {jobCategories.map((item, index) => {
             return (
+              <>
+             
               <JobCategory
                 key={index}
                 CategoryName={item.category}
                 count={item.count}
                 callBack={showPopup}
               />
+              </>
+             
             );
           })}
         </div>

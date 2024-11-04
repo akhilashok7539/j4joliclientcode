@@ -191,6 +191,7 @@ const AdminAddJob = () => {
   const getTeleCallers = () => {
     api.get('/telecaller').then((res) => {
       const TelecallersList = res.data.map(x => x.name)
+      console.log(TelecallersList)
       setTelecaller(TelecallersList)
     }).catch((err) => {
       showErrorToast(toast, err);
@@ -827,18 +828,18 @@ const AdminAddJob = () => {
                 <FcCustomerSupport className="icon" />
                 <h4>Other Details</h4>
               </div>
-              <TextInput
-                idName="telecallerName"
-                LabelName="Telecaller Name"
+              
+              <SelectInput
                 isRequired={true}
                 isInvalid={errorMsg.telecallerName !== ''}
-                placeholder="Enter Telecaller Name"
+                errorMsg={errorMsg.telecallerName}
+                dataList={callers.length >0 ?callers :[]}
+                mt={4}
                 name="telecallerName"
                 value={values.telecallerName}
                 onChange={onChange}
-                errorMsg={errorMsg.telecallerName}
+                LabelName="Telecaller Name"
                 onBlur={validateData}
-                mt={4}
               />
 
               <TextInput

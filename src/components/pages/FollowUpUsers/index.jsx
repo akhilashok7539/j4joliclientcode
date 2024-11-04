@@ -133,7 +133,7 @@ const FollowUpUser = () => {
                             ))
                         ) : (
                             <Tr>
-                                <Td colSpan="7" style={{ textAlign: 'center' }}>
+                                <Td colSpan="8" style={{ textAlign: 'center' }}>
                                     No users available
                                 </Td>
                             </Tr>

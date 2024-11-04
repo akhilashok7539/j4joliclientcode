@@ -6,6 +6,7 @@ const JobCategory = ({ CategoryName, count, callBack, exploreJobs = false }) => 
   const history = useHistory();
 
   const actionOnClick = () => {
+    console.log("click",CategoryName,exploreJobs,count)
     if (exploreJobs) {
       history.push('/discover-jobs/dashboard/' + CategoryName + '/1');
       return;
@@ -13,7 +14,7 @@ const JobCategory = ({ CategoryName, count, callBack, exploreJobs = false }) => 
     if (count > 0) {
       callBack(CategoryName);
     } else {
-      history.push('/job-seeker/no-jobs');
+      // history.push('/job-seeker/no-jobs');
     }
   };
   return (

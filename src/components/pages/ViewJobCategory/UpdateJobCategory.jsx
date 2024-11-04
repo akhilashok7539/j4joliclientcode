@@ -235,7 +235,7 @@ function UpdateJobCategory() {
             subCategory.map((option) => (
               <div
                 key={option._id}
-                onClick={() => selectedIds.includes(option._id) ? alreadySelected(option.name) : toggleSelection(option._id)}
+                onClick={() =>  toggleSelection(option._id)}
                 style={{
                   padding: '13px',
                   cursor: 'pointer',

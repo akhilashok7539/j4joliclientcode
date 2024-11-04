@@ -76,3 +76,29 @@
     }
   }
   
+
+  
+.labelValidation {
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
+
+.selectBoxContainer {
+    width: 100%;
+    border: 1px solid #0000001f;
+    padding: 10px;
+    border-radius: 4px;
+    
+}
+.autoCompleteDropDownBox{
+  width: 100%;
+  border: 1px solid #0000001f;
+  padding: 11px;
+  margin-top: 18px;
+  border-radius: 4px;
+}
+.containerDiv{
+  margin-top: 10px;
+}.isRequired {
+  color: var(--chakra-colors-red-500);
+}

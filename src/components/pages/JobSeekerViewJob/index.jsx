@@ -207,7 +207,7 @@ const JobSeekerViewJob = () => {
               </div>
               <div className="sub-container">
                 <div className="label">Location</div>
-                <div> {job.location} </div>
+                <div> {job.location?.name} </div>
               </div>
             </div>
           </div>
