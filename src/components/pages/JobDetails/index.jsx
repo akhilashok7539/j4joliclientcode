@@ -32,7 +32,8 @@ const JobDetails = ({ url, approved }) => {
   const history = useHistory();
 
   const toast = useToast();
-
+  const [jobCategories,setJobCategories] = useState([])
+  const [jobCatogory,setJobCategoy] = useState('')
   // const { isOpen, onOpen, onClose } = useDisclosure();
 
   /* const deleteJob = () => {
@@ -55,11 +56,32 @@ const JobDetails = ({ url, approved }) => {
       });
   }, [id]);
 
+  
+  useEffect(() => {
+    api
+      .get(`/job-category?include_hidden=false&sub_category=true`)
+      .then((res) => {
+        setJobCategories(res.data.job_categories);
+        // console.log(res.data.job_categories)
+        // const jobCat = res.data.job_categories.filter(x=> x.id === job.job_category )
+        // console.log(job.job_category,jobCat[0].name)
+        // setJobCategoy(jobCat[0].name)
+      })
+      .catch((err) => {
+        showErrorToast(toast, err);
+      });
+  },[])
+  useEffect(() => {
+    const jobCat = jobCategories.filter(x=> x.id === job.job_category )
+    console.log(jobCategories)
+    setJobCategoy(jobCat[0]?.name)
+  },[job.job_category,jobCategories])
+
   const funOnCopyBtnClick = async () => {
     try {
       let data = `Hi,\n\nAs part of our telephonic conversation, the job vacancy in your organization is advertised on our portal for free.\n\nJob Posted On : ${new Date(
         job.approved_on
-      ).toLocaleString()}\nTelecaller Name : ${job.telecallerName}\nVacancy given by : ${
+      ).toLocaleString()}\nTelecaller Name : ${job.telecallerName? job.telecallerName : ''}\nVacancy given by : ${
         job.contact_person.mobile_number
       }\nPortal : Yes\nPlacement : ${
         job?.flags?.placement ? 'Yes' : 'No'
@@ -130,7 +152,7 @@ const JobDetails = ({ url, approved }) => {
               {user.user_type !== 'job-seeker' ? (
                 <div className="sub-container">
                   <div className="label">Job Category</div>
-                  <div>{job.job_category}</div>
+                  <div>{jobCatogory}</div>
                 </div>
               ) : null}
 

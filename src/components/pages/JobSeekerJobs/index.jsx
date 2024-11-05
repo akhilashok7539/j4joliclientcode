@@ -20,10 +20,34 @@ const JobSeekerJobs = ({ url }) => {
   const [filters, setFilters] = useRhinoState('filters');
 
   const history = useHistory();
+  const [district,setDistrictList] = useState([]);
 
   // district list for select input
-  const districtList = getDistrictsForFilter()
+  // const districtList = getDistrictsForFilter()
+  
+  const districtList = ['All']
 
+  useEffect(() => {
+    getDistrictsList()
+  },[])
+  useEffect(() => {
+    console.log(district)
+  },[district])
+
+  const getDistrictsList = () => {
+    api.get('/district').then((res) => {
+      // const list = []
+      // districtList.push('All')
+      res.data.forEach((item) => {
+        districtList.push(item.name)
+      })
+      setDistrictList(districtList)
+      // console.log(list)
+      // districtList(list)
+    }).catch((err) => {
+      // showErrorToast(toast, err);
+    });
+  }
   const toast = useToast();
   /* eslint-disable */
   useEffect(() => {
@@ -70,7 +94,7 @@ const JobSeekerJobs = ({ url }) => {
             <div className="select-container">
               <SelectInput
                 isRequired={true}
-                dataList={districtList}
+                dataList={district}
                 mt={4}
                 name="district"
                 value={filters.district}

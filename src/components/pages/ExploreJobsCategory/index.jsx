@@ -1,22 +1,48 @@
+import React, { useEffect, useState } from 'react';
+
 import Jobs from './Jobs';
 import { useRhinoState } from '../../context';
 import SelectInput from '../../utilities/SelectInput';
 import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { getDistrictsForFilter } from '../../../districts';
+import api from '../../../helpers/axios';
 
 const ExploreJobsCategory = ({ url }) => {
   const [filters, setFilters] = useRhinoState('filters');
+  const [district,setDistrictList] = useState([]);
 
   const { CategoryName } = useParams();
 
   const history = useHistory();
 
   // district list for select input
-  const districtList = getDistrictsForFilter()
+  // const districtList = getDistrictsForFilter()
+  const districtList = ['All']
 
   /* eslint-disable */
 
+  useEffect(() => {
+    getDistrictsList()
+  },[])
+  useEffect(() => {
+    
+  },[district])
+
+  const getDistrictsList = () => {
+    api.get('/district').then((res) => {
+      // const list = []
+      // districtList.push('All')
+      res.data.forEach((item) => {
+        districtList.push(item.name)
+      })
+      setDistrictList(districtList)
+      // console.log(list)
+      // districtList(list)
+    }).catch((err) => {
+      // showErrorToast(toast, err);
+    });
+  }
   const filterChange = (event) => {
     setFilters((previousValues) => ({
       ...previousValues,
@@ -32,7 +58,7 @@ const ExploreJobsCategory = ({ url }) => {
         <div className="select-container">
           <SelectInput
             isRequired={true}
-            dataList={districtList}
+            dataList={district}
             mt={4}
             name="district"
             value={filters.district}

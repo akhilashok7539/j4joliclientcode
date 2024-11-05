@@ -40,7 +40,7 @@ const JobSeekerRegistration = () => {
     'Other',
   ];
 
-  const districtList = getDistricts()
+  // const districtList = getDistricts()
   const { CategoryName } = useParams();
 
   // React Router dom useHistory to Redirect to Login
@@ -81,6 +81,8 @@ const JobSeekerRegistration = () => {
 
   const [TermsAndConditions, setTermsAndCondition] = useState(false);
   const [DataSharingPolicy, setDataSharingPolicy] = useState(false);
+
+  const [districtList,setDistrictList] = useState([]);
 
   /**
    * custom hook to handle form
@@ -392,7 +394,20 @@ const JobSeekerRegistration = () => {
       setButtonState(true);
     }
   }, [TermsAndConditions, DataSharingPolicy]);
+  useEffect(() => {
+    api.get('/district').then((res) => {
+      // setDistrictList(res.data)
+      const list = []
+      res.data.forEach((item) => {
+        list.push(item.name)
+      })
+      // console.log(list)
+      setDistrictList(list)
 
+    }).catch((err) => {
+      showErrorToast(toast, err);
+    });
+  },[])
   const getSubCategories = async () => {
     api
       .get(`/job-category/get-job-category?job_category=${CategoryName}`)
@@ -639,7 +654,7 @@ const JobSeekerRegistration = () => {
                 isRequired={true}
                 isInvalid={ErrorMessage.district !== ''}
                 errorMsg={ErrorMessage.district}
-                dataList={districtList}
+                dataList={districtList?districtList:[]}
                 mt={4}
                 name="district"
                 value={district}
