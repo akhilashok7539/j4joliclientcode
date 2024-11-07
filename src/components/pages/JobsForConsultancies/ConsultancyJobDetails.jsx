@@ -17,7 +17,8 @@ const ConsultancyJobDetails = () => {
   const { id } = useParams();
 
   const [job, setJob] = useState({});
-
+  const [jobCategories,setJobCategories] = useState([])
+  const [jobCatogory,setJobCategoy] = useState('')
   const toast = useToast();
 
   // const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,7 +37,25 @@ const ConsultancyJobDetails = () => {
         showErrorToast(toast, err);
       });
   }, [id]);
-
+  useEffect(() => {
+    api
+      .get(`/job-category?include_hidden=false&sub_category=true`)
+      .then((res) => {
+        setJobCategories(res.data.job_categories);
+        // console.log(res.data.job_categories)
+        // const jobCat = res.data.job_categories.filter(x=> x.id === job.job_category )
+        // console.log(job.job_category,jobCat[0].name)
+        // setJobCategoy(jobCat[0].name)
+      })
+      .catch((err) => {
+        showErrorToast(toast, err);
+      });
+  },[])
+  useEffect(() => {
+    const jobCat = jobCategories.filter(x=> x.id === job.job_category )
+    console.log(jobCategories)
+    setJobCategoy(jobCat[0]?.name)
+  },[job.job_category,jobCategories])
   /* eslint-enable */
   if (Object.keys(job).length === 0 && job.constructor === Object) {
     return <Loading />;
@@ -55,7 +74,8 @@ const ConsultancyJobDetails = () => {
               {user.user_type !== 'job-seeker' ? (
                 <div className="sub-container">
                   <div className="label">Job Category</div>
-                  <div>{job.job_category}</div>
+                  <div>{jobCatogory}</div>
+
                 </div>
               ) : null}
 

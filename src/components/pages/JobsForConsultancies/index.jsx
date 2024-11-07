@@ -20,23 +20,24 @@ const JobsForConsultancies = ({ approved, url }) => {
   const history = useHistory();
 
   // district list for select input
-  const districtList = [
-    'All',
-    'Alappuzha',
-    'Ernakulam',
-    'Idukki',
-    'Kannur',
-    'Kasaragod',
-    'Kollam',
-    'Kottayam',
-    'Kozhikode',
-    'Malappuram',
-    'Palakkad',
-    'Pathanamthitta',
-    'Thrissur',
-    'Thiruvananthapuram',
-    'Wayanad',
-  ];
+  // const districtList = [
+  //   'All',
+  //   'Alappuzha',
+  //   'Ernakulam',
+  //   'Idukki',
+  //   'Kannur',
+  //   'Kasaragod',
+  //   'Kollam',
+  //   'Kottayam',
+  //   'Kozhikode',
+  //   'Malappuram',
+  //   'Palakkad',
+  //   'Pathanamthitta',
+  //   'Thrissur',
+  //   'Thiruvananthapuram',
+  //   'Wayanad',
+  // ];
+  const [districtList,setDistrictList] = useState([])
 
   const toast = useToast();
 
@@ -61,8 +62,26 @@ const JobsForConsultancies = ({ approved, url }) => {
         showErrorToast(toast, err);
       });
   }, []);
-  /* eslint-enable */
 
+  
+  useEffect(() => {
+    getDistrictsList()
+  },[])
+  /* eslint-enable */
+  const getDistrictsList = () => {
+    api.get('/district').then((res) => {
+      const list = []
+      list.push('All')
+      res.data.forEach((item) => {
+        list.push(item.name)
+      })
+      setDistrictList(list)
+      // console.log(list)
+      // districtList(list)
+    }).catch((err) => {
+      // showErrorToast(toast, err);
+    });
+  }
   return (
     <div className="consultancy-jobs">
       <div className="filters">
