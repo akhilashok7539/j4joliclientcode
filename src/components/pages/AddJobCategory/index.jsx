@@ -112,7 +112,7 @@ function AddJobCategory() {
       });
 
       setCategory('');
-      setSubCategory([]);
+      // setSubCategory([]);
       setSelectedIds([])
     } catch (err) {
       showErrorToast(toast, err);
