@@ -391,7 +391,7 @@ const AddUser = () => {
             setCoordinates({ lat, lng });
             const prefObj = {
                 type: "Point",
-                coordinates: [lng, lat],  // Note: usually [lng, lat]
+                coordinates: [lat,lng],  // Note: usually [lng, lat]
                 name: firstPart
             };
             // Use the functional form of setLocations to add the new object

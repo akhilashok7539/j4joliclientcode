@@ -500,7 +500,7 @@ const UpdateUser = () => {
 
             const prefObj = {
                 type: "Point",
-                coordinates: [lng, lat],  // Note: usually [lng, lat]
+                coordinates: [lat,lng],  // Note: usually [lng, lat]
                 name: firstPart
             };
 

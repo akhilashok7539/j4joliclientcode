@@ -16,11 +16,11 @@ const AddPrefferedLocation = (props) => {
     const [districtName, setdistrictName] = useState('');
     const [districtError, setdistrictError] = useState('');
     const [districtDetails, setEditdistrictDetails] = useState('');
-    
+
     const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
     const [place, setPlace] = useState(null);
 
-    const [error, setError] = useState(false); 
+    const [error, setError] = useState(false);
     const autocompleteRef = useRef(null);
     // Chakra ui toast
     const toast = useToast();
@@ -33,11 +33,11 @@ const AddPrefferedLocation = (props) => {
             setError(false);
             // Handle the update logic here
             try {
-          
+
                 await api.post('/preferred-location', {
                     "type": "Point",
-                    "coordinates": [coordinates.lng, coordinates.lat],
-                    "name":place
+                    "coordinates": [coordinates.lat, coordinates.lng],
+                    "name": place
                 });
                 toast({
                     title: 'Added Successfully',
@@ -46,7 +46,7 @@ const AddPrefferedLocation = (props) => {
                     duration: 2000,
                     isClosable: true,
                 });
-    
+
                 setdistrictName('');
                 setPlace('')
                 if (autocompleteRef.current) {
@@ -62,7 +62,7 @@ const AddPrefferedLocation = (props) => {
         setdistrictName(e.target.value);
     };
 
-  
+
     useEffect(() => {
         console.log("Updated coordinates:", coordinates);
         console.log("Updated place:", place);
@@ -79,7 +79,7 @@ const AddPrefferedLocation = (props) => {
         if (place.geometry) {
             const lat = place.geometry.location.lat();
             const lng = place.geometry.location.lng();
-            
+
             setCoordinates({ lat, lng });
             // console.log("coordinates",coordinates)
         }
@@ -96,17 +96,17 @@ const AddPrefferedLocation = (props) => {
                     options={{
                         types: ['geocode'], // Use 'geocode' for broader location results
                         componentRestrictions: { country: 'IN' } // Restrict results to India
-                      }}
+                    }}
                     style={{
                         width: '100%',
                         border: '1px solid #0000001f',
                         padding: '11px'
                     }}
-                   
+
                 />
-                 {error && <p style={{ color: 'red' }}>Please select a location</p>}
-                 <Button onClick={handlePrefferedLocationSubmit}>Save</Button>
-               
+                {error && <p style={{ color: 'red' }}>Please select a location</p>}
+                <Button onClick={handlePrefferedLocationSubmit}>Save</Button>
+
             </div>
 
 
@@ -118,23 +118,23 @@ const AddPrefferedLocation = (props) => {
 export default AddPrefferedLocation;
 
 // onPlaceSelected={(place) => {
-                    //     if (place.geometry) {
-                    //         const latitude = place.geometry.location.lat();
-                    //         const longitude = place.geometry.location.lng();
-                    //         console.log('Latitude:', latitude);
-                    //         console.log('Longitude:', longitude);
-                    //         setCoordinates({ latitude, longitude });
-                    //         console.log("coordinates",coordinates)
+//     if (place.geometry) {
+//         const latitude = place.geometry.location.lat();
+//         const longitude = place.geometry.location.lng();
+//         console.log('Latitude:', latitude);
+//         console.log('Longitude:', longitude);
+//         setCoordinates({ latitude, longitude });
+//         console.log("coordinates",coordinates)
 
 
-                    //     } else {
-                    //         console.log('Location data not available');
-                    //     }
-                    // }}
+//     } else {
+//         console.log('Location data not available');
+//     }
+// }}
 
 
 
- {/* <div>
+{/* <div>
                     <h2>Google Places Autocomplete</h2>
                     <Autocomplete
                         apiKey={'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg'}
