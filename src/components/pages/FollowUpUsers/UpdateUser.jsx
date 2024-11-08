@@ -165,11 +165,13 @@ const UpdateUser = () => {
         );
         const mapLocationNames = filteredList.map(x => x.name)
         setLocations(data.preferredLocation)
-        const list2Ids = new Set(data.jobSubCategory.map(item => item._id));
-        const commonItems = subCategories.filter(item => list2Ids.has(item._id));
-        const filterItems = commonItems.map(x => x.name);
-
-        setSelectedOptionsSubCat(filterItems)
+        // const list2Ids = new Set(data.jobSubCategory.map(item => item._id));
+        // const commonItems = subCategories.filter(item => list2Ids.has(item._id));
+        // const filterItems = commonItems.map(x => x.name);
+        // console.log("filter data list")
+        // jobSubCat = data.jobSubCategory;
+        const subCatSession = data.jobSubCategory.map(x => x.name)
+        setSelectedOptionsSubCat(subCatSession)
 
         setValues((prevValues) => ({
             ...prevValues,
@@ -390,8 +392,10 @@ const UpdateUser = () => {
             // const filterItems = commonItems.map(x => x.name);
             const commonItems = subCategories.filter(item => selectedOptionsSubCat.includes(item.name));
             // console.log(commonItems.map(x=>x._id))
-            values.jobSubCategory = commonItems.map(x => x._id)
+            const filterItemsSubCat = commonItems.map(item => item._id);
+            // values.jobSubCategory = commonItems.map(x => x._id)
             // values.jobSubCategory = selectedOptionsSubCat.map(x=>x._id)
+            // console.log("selectedOptionsSubCat",selectedOptionsSubCat,commonItems)
 
             const job = {
                 name: values.name,
@@ -399,7 +403,7 @@ const UpdateUser = () => {
                 experience: values.experience_required,
                 preferredDistricts: selectDist,
                 jobCategory: values.job_category,
-                jobSubCategory: values.jobSubCategory,
+                jobSubCategory: filterItemsSubCat,
                 gender: trueValues[0],
                 preferredLocation: prefLoc.concat(locations),
                 followedUpBy: values.followedUpBy,
@@ -412,8 +416,7 @@ const UpdateUser = () => {
                     }
                 ]
             };
-            console.log(job)
-            // //   setButtonLoading(true);
+           
             const data = JSON.parse(sessionStorage.getItem("UserDetailsUpdate"))
 
             const API_ENDPOINT = '/follow-up-user/' + data._id
