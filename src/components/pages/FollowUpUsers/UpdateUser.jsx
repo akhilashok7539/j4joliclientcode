@@ -67,7 +67,7 @@ const UpdateUser = () => {
     const [dataPersist, setDataPersist] = useState(false);
     const [jobCategories, setJobCategories] = useState([]);
     const [dataListDistrict, setDataListDistrict] = useState([]);
-    const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
+    const [coordinates, setCoordinates] = useState({ lng: '', lat: '' });
     const [place, setPlace] = useState(null);
     const [error, setError] = useState(false);
     const autocompleteRef = useRef(null);
@@ -170,6 +170,12 @@ const UpdateUser = () => {
         // const filterItems = commonItems.map(x => x.name);
         // console.log("filter data list")
         // jobSubCat = data.jobSubCategory;
+        // preferredLocation
+
+        const prefferedlocationFullListFilter = 
+        data.preferredLocation.filter(item => prefferedlocationFullList.filter(item1=>item.name === item1.name))
+        console.log("prefferedlocationFullListFilter",prefferedlocationFullListFilter)
+        // setSelectedOptions
         const subCatSession = data.jobSubCategory.map(x => x.name)
         setSelectedOptionsSubCat(subCatSession)
 
@@ -416,7 +422,7 @@ const UpdateUser = () => {
                     }
                 ]
             };
-           
+
             const data = JSON.parse(sessionStorage.getItem("UserDetailsUpdate"))
 
             const API_ENDPOINT = '/follow-up-user/' + data._id
@@ -495,12 +501,12 @@ const UpdateUser = () => {
             const lat = place.geometry.location.lat();
             const lng = place.geometry.location.lng();
 
-            setCoordinates({ lat, lng });
+            setCoordinates({ lng, lat });
             // console.log("coordinates",coordinates)
 
             const prefObj = {
                 type: "Point",
-                coordinates: [lat,lng],  // Note: usually [lng, lat]
+                coordinates: [lng, lat],  // Note: usually [lng, lat]
                 name: firstPart
             };
 
@@ -811,7 +817,7 @@ const UpdateUser = () => {
                                         <option value="Pending">Pending</option>
                                         <option value="Informed">Informed</option>
                                     </select>
-                                   
+
                                     <label className="dropdown-label">Remarks</label>
                                     <input className='selectBoxContainer' type="text" placeholder='Remarks' onChange={handleInputChange} value={values.followUpUserRemarks} />
                                 </div>

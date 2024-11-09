@@ -18,7 +18,7 @@ const AddPrefferedLocation = (props) => {
     const [districtError, setdistrictError] = useState('');
     const [districtDetails, setEditdistrictDetails] = useState('');
     const [place, setPlace] = useState(null);
-    const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
+    const [coordinates, setCoordinates] = useState({ lng: '', lat: '' });
     // Chakra ui toast
     const toast = useToast();
 
@@ -113,7 +113,7 @@ const AddPrefferedLocation = (props) => {
         if (place.geometry) {
             const lat = place.geometry.location.lat();
             const lng = place.geometry.location.lng();
-            setCoordinates({ lat, lng });
+            setCoordinates({ lng, lat });
         }
     };
     return (
@@ -129,28 +129,8 @@ const AddPrefferedLocation = (props) => {
 
                 />
                 {props.isEdit ? (<Button onClick={handleTelecallerUpdate}>Update</Button>) : (<Button onClick={handleTelecallerSubmit}>Save</Button>)}
-                {/* <div>
-                    <h2>Google Places Autocomplete</h2>
-                    <Autocomplete
-                        apiKey={'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg'}
-                        onPlaceSelected={handlePlaceSelected}
-                        types={['(cities)']} // restrict to cities, optional
-                        fields={['geometry', 'name']} // fetch geometry to get lat and lng
-                        options={{
-                            componentRestrictions: { country: 'us' }, // restrict to a country, optional
-                        }}
-                    />
-                    {place && (
-                        <div>
-                            <h3>Selected Place Details:</h3>
-                            <p><strong>Name:</strong> {place.name}</p>
-                            <p><strong>Latitude:</strong> {coordinates.lat}</p>
-                            <p><strong>Longitude:</strong> {coordinates.lng}</p>
-                        </div>
-                    )}
-                </div> */}
+                
             </div>
-
 
         </>
     )

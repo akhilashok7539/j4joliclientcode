@@ -18,7 +18,7 @@ const AddorUpdateDistrict = (props) => {
     const [districtError, setdistrictError] = useState('');
     const [districtDetails, setEditdistrictDetails] = useState('');
     const [place, setPlace] = useState(null);
-    const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
+    const [coordinates, setCoordinates] = useState({lng: '', lat: '' });
     // Chakra ui toast
     const toast = useToast();
 
@@ -113,7 +113,7 @@ const AddorUpdateDistrict = (props) => {
         if (place.geometry) {
             const lat = place.geometry.location.lat();
             const lng = place.geometry.location.lng();
-            setCoordinates({ lat, lng });
+            setCoordinates({ lng, lat });
         }
     };
     return (

@@ -93,7 +93,8 @@ const EmployerAddJob = () => {
 
   // history to set router url
   const history = useHistory();
-  const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
+  const [coordinates, setCoordinates] = useState({ lng: '', lat: '' });
+
   const [place, setPlace] = useState(null);
 
   // toast
@@ -190,7 +191,7 @@ const EmployerAddJob = () => {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
 
-      setCoordinates({ lat, lng });
+      setCoordinates({ lng, lat });
       // console.log("coordinates",coordinates)
     }
   };
@@ -250,7 +251,7 @@ const EmployerAddJob = () => {
     ) {
       values.location = {
         "type": "Point",
-        "coordinates": [coordinates.lat, coordinates.lng],
+        "coordinates": [coordinates.lng, coordinates.lat],
         "name": place
       }
       const job = {

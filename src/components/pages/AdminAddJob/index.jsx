@@ -114,7 +114,8 @@ const AdminAddJob = () => {
 
   const [dataPersist, setDataPersist] = useState(false);
 
-  const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
+  const [coordinates, setCoordinates] = useState({ lng: '', lat: '' });
+
   const [place, setPlace] = useState(null);
   const autocompleteRef = useRef(null);
   const [error, setError] = useState(false);
@@ -232,7 +233,7 @@ const AdminAddJob = () => {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
 
-      setCoordinates({ lat, lng });
+      setCoordinates({ lng, lat });
       // console.log("coordinates",coordinates)
     }
   };
@@ -305,7 +306,7 @@ const AdminAddJob = () => {
 
       values.location = {
         "type": "Point",
-        "coordinates": [coordinates.lat, coordinates.lng],
+        "coordinates": [coordinates.lng, coordinates.lat],
         "name": place
       }
 
@@ -828,12 +829,12 @@ const AdminAddJob = () => {
                 <FcCustomerSupport className="icon" />
                 <h4>Other Details</h4>
               </div>
-              
+
               <SelectInput
                 isRequired={true}
                 isInvalid={errorMsg.telecallerName !== ''}
                 errorMsg={errorMsg.telecallerName}
-                dataList={callers.length >0 ?callers :[]}
+                dataList={callers.length > 0 ? callers : []}
                 mt={4}
                 name="telecallerName"
                 value={values.telecallerName}

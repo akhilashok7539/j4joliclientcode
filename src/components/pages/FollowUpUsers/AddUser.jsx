@@ -58,7 +58,7 @@ const AddUser = () => {
     const [dataPersist, setDataPersist] = useState(false);
     const [jobCategories, setJobCategories] = useState([]);
     const [dataListDistrict, setDataListDistrict] = useState([]);
-    const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
+    const [coordinates, setCoordinates] = useState({ lng: '', lat: '' });
     const [place, setPlace] = useState(null);
     const autocompleteRef = useRef(null);
     const [prefferedlocationFullList, setLocationsListFull] = useState([])
@@ -388,10 +388,10 @@ const AddUser = () => {
         if (place.geometry) {
             const lat = place.geometry.location.lat();
             const lng = place.geometry.location.lng();
-            setCoordinates({ lat, lng });
+            setCoordinates({ lng, lat });
             const prefObj = {
                 type: "Point",
-                coordinates: [lat,lng],  // Note: usually [lng, lat]
+                coordinates: [lng,lat],  // Note: usually [lng, lat]
                 name: firstPart
             };
             // Use the functional form of setLocations to add the new object

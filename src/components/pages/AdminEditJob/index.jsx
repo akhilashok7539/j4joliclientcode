@@ -91,7 +91,8 @@ const AdminEditJob = (approved) => {
   const [subCategories, setSubCategories] = useState([]);
 
   // To set location
-  const [coordinates, setCoordinates] = useState({ lat: '', lng: '' });
+  const [coordinates, setCoordinates] = useState({ lng: '', lat: '' });
+
   const [place, setPlace] = useState(null);
   const autocompleteRef = useRef(null);
   const [error, setError] = useState(false);
@@ -226,7 +227,7 @@ const AdminEditJob = (approved) => {
     const lat = currentJobDetails?.location?.coordinates[0];
     const lng = currentJobDetails?.location?.coordinates[1];
 
-    setCoordinates({ lat, lng });
+    setCoordinates({ lng, lat });
     setPlace(currentJobDetails.location?.name)
     setValues((prevValues) => ({
       ...prevValues,
@@ -305,7 +306,7 @@ const AdminEditJob = (approved) => {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
 
-      setCoordinates({ lat, lng });
+      setCoordinates({ lng,lat });
       // console.log("coordinates",coordinates)
     }
     // setValues((prevValues) => ({
@@ -393,7 +394,7 @@ const AdminEditJob = (approved) => {
     ) {
       values.location = {
         "type": "Point",
-        "coordinates": [coordinates.lat, coordinates.lng],
+        "coordinates": [coordinates.lng, coordinates.lat],
         "name": place
       }
       const job = {
@@ -977,7 +978,7 @@ const AdminEditJob = (approved) => {
                   onBlur={validateData}
                   mt={4}
                 />
-                
+
                 <TextInput
                   idName="jobSource"
                   LabelName="Job Source"
